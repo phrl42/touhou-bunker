@@ -23,7 +23,7 @@ int main(){
                         640, 480,
                         SDL_WINDOW_SHOWN);
     /*if the window suddenly dies*/
-  }if(window == NULL)
+  }if(!window)
     std::cout<< "Window Initialization failed: " << SDL_GetError() << std::endl;
 
     else{
@@ -44,23 +44,29 @@ int main(){
         SDL_UpdateWindowSurface(window);
 
           while(SDL_PollEvent(&ev) != 0){
-            if(ev.type == SDL_QUIT)
-              gameLoop = false;
-	    else if(ev.type == SDL_KEYDOWN){
-	      std::cout << "You are pressing keydown, nice" << std::endl;
-	    }else if(ev.type == SDL_KEYUP){
-	      std::cout << "You are pressing keyup, nice" << std::endl;
-	    }
+		  
+		  switch(ev.type)
+		  {
+			  case SDL_QUIT:
+				  gameLoop = false;
+				  break;
+			  case SDL_KEYDOWN:
+				  std::cout << "You are pressing keydown, nice" << std::endl;
+				  break;
+			  case SDL_KEYUP:
+				  std::cout << "You are pressing keyup, nice" << std::endl;
+				  break;
+			  default:
+				  break;
+				  
+
+		  }
           }
         }
-      }
   }
-    /*free the memory*/
+    /*free the allocated memory*/
   SDL_FreeSurface(imageSurface);
-  imageSurface = nullptr;
   SDL_DestroyWindow(window);
-  window = nullptr;
-  windowSurface = nullptr;
   SDL_Quit();
 
     return 0;
