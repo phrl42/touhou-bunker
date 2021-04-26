@@ -30,7 +30,7 @@ int main(){
 
       /*Window creation*/
       windowSurface = SDL_GetWindowSurface(window);
-      imageSurface = SDL_LoadBMP("panzer.bmp");
+      imageSurface = SDL_LoadBMP("menu.bmp");
       /*if the image wasn't able to be loaded*/
       if(imageSurface == NULL)
         std::cout << "Image loading failed: " << SDL_GetError() << std::endl;
