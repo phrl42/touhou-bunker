@@ -63,7 +63,8 @@ int main(){
 		  }
           }
         }
-  }
+   }
+ }
     /*free the allocated memory*/
   SDL_FreeSurface(imageSurface);
   SDL_DestroyWindow(window);
