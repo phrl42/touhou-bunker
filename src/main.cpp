@@ -46,6 +46,11 @@ int main(){
           while(SDL_PollEvent(&ev) != 0){
             if(ev.type == SDL_QUIT)
               gameLoop = false;
+	    else if(ev.type == SDL_KEYDOWN){
+	      std::cout << "You are pressing keydown, nice" << std::endl;
+	    }else if(ev.type == SDL_KEYUP){
+	      std::cout << "You are pressing keyup, nice" << std::endl;
+	    }
           }
         }
       }
