@@ -50,7 +50,7 @@ int main(){
         }
       }
   }
-    /*reallocate the memory and end the program*/
+    /*free the memory*/
   SDL_FreeSurface(imageSurface);
   imageSurface = nullptr;
   SDL_DestroyWindow(window);
