@@ -77,9 +77,10 @@ int main(){
                     case SDLK_DOWN:
 		      std::cout << "down press" << std::endl;
                         break;
-                    case SDL_QUIT:
+                    case SDLK_q:
 		      menu = false;
 		      std::cout << "do you see this" << std::endl;
+		        break;
 		    case SDLK_RETURN:
 		      std::cout << "Entering game..." << std::endl;
 		      /*todo*/
@@ -88,6 +89,9 @@ int main(){
                         break;
 	       
                 }
+	        
+		  if(menu == false)
+		    break;
             }
         
           }
