@@ -4,12 +4,24 @@
 
 int main(){
 
-  /*Window and surface Initialization*/
+  /*window and surface initialization*/
   SDL_Window *window = nullptr;
   SDL_Surface *windowSurface = nullptr;
   SDL_Surface *imageSurface = nullptr;
-  bool gameLoop = true;
+  bool menu = true;
   SDL_Event ev;
+  /*This is for keyboard handling stuff*/
+  
+  bool KEYS[322];  /* 322 SDLK_DOWN events*/
+
+  for(int i = 0; i < 322; i++) { /* all events to false*/
+    KEYS[i] = false;
+}
+
+  //  SDL_EnableKeyRepeat(0,0); /*check for holding the key down*/
+
+
+  std::cout << "Don't mind all the logging." << std::endl;
 
   if(SDL_Init(SDL_INIT_VIDEO) < 0)
     std::cout << "Video Initialization error: " << SDL_GetError() << std::endl;
@@ -28,7 +40,7 @@ int main(){
 
     else{
 
-      /*Window creation*/
+      /*window creation*/
       windowSurface = SDL_GetWindowSurface(window);
       imageSurface = SDL_LoadBMP("menu.bmp");
       /*if the image wasn't able to be loaded*/
@@ -36,31 +48,48 @@ int main(){
         std::cout << "Image loading failed: " << SDL_GetError() << std::endl;
 
       else{
-        /*the game loop, only exits on demand (killing the program)*/
-        while(gameLoop){
+        /*the menu loop, only exits on demand (killing the program)*/
+        while(menu){ 
 
+	  /*this is the menu*/
+	
         /*load the bmp and draw it onto the windowSurface*/
         SDL_BlitSurface(imageSurface, NULL, windowSurface, NULL);
         SDL_UpdateWindowSurface(window);
 
           while(SDL_PollEvent(&ev) != 0){
 		  
-		  switch(ev.type)
-		  {
-			  case SDL_QUIT:
-				  gameLoop = false;
-				  break;
-			  case SDL_KEYDOWN:
-				  std::cout << "You are pressing keydown, nice" << std::endl;
-				  break;
-			  case SDL_KEYUP:
-				  std::cout << "You are pressing keyup, nice" << std::endl;
-				  break;
-			  default:
-				  break;
-				  
-
-		  }
+	    switch(ev.type){
+            /*Look for a keypress*/
+            case SDL_KEYDOWN:
+                /*Check the SDLKey values*/
+                switch(ev.key.keysym.sym){
+		  
+                    case SDLK_LEFT:
+		      std::cout << "left press" << std::endl;
+                        break;
+                    case SDLK_RIGHT:
+		      std::cout << "right press" << std::endl;
+                        break;
+                    case SDLK_UP:
+		      std::cout << "up press" << std::endl;
+                        break;
+                    case SDLK_DOWN:
+		      std::cout << "down press" << std::endl;
+                        break;
+                    case SDL_QUIT:
+		      menu = false;
+		      std::cout << "do you see this" << std::endl;
+		    case SDLK_RETURN:
+		      std::cout << "Entering game..." << std::endl;
+		      /*todo*/
+		      break;
+		    default:
+                        break;
+	       
+                }
+            }
+        
           }
         }
    }
