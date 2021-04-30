@@ -109,7 +109,7 @@ int main(){
 	    case SDLK_RETURN:
 	      std::cout << "entering game..." << std::endl;
 	      MixQuit();
-	      mainGame();
+	      
 	      /*todo*/	
 	    default:
 	      break;
@@ -126,7 +126,7 @@ int main(){
   /*free the allocated memory*/
   SDL_FreeSurface(imageSurface);
   SDL_DestroyWindow(window);
-  /* Mix_FreeMusic(bgm);  ignore this for now*/
+  /*Mix_FreeMusic(bgm);  ignore this for now*/
   Mix_Quit();
   SDL_Quit();
 
