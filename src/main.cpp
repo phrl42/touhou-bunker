@@ -108,7 +108,7 @@ int main(){
 	      break;
 	    case SDLK_RETURN:
 	      std::cout << "entering game..." << std::endl;
-	      MixQuit();
+	      Mix_Quit();
 	      
 	      /*todo*/	
 	    default:
