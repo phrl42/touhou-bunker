@@ -60,6 +60,9 @@ int main(){
         std::cout << "Image loading failed: " << SDL_GetError() << std::endl;
 
       else{
+	/*play the music in a loop*/
+	if(!Mix_PlayingMusic())
+	  Mix_PlayMusic(bgm, -1);
         /*the menu loop, only exits on demand (killing the program)*/
         while(menu){ 
 
@@ -95,24 +98,12 @@ int main(){
 		        break;
 		    case SDLK_RETURN:
 		      std::cout << "Entering game..." << std::endl;
-		      /*todo*/
-		    case SDLK_p:
-
-		    std::cout << "playing music" << std::endl;
-		    /*plays the music*/
-		        if(!Mix_PlayingMusic())
-			    Mix_PlayMusic(bgm, -1);
-
-			else if(Mix_PausedMusic())
-				Mix_ResumeMusic();
-			else
-			    Mix_PauseMusic();
-			break;	
+		      /*todo*/	
 		    default:
                         break;
 	       
                 }
-	        
+		/*there are 2 switch statements, so don't forget to break twice!*/
 		  if(menu == false)
 		    break;
             }
