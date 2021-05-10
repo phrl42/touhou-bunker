@@ -53,11 +53,11 @@ int main(){
     //window creation
 
     windowSurface = SDL_GetWindowSurface(window);
-    imageSurface = SDL_LoadBMP("menu.bmp");
+    imageSurface = SDL_LoadBMP("img/menu.bmp");
 
     //load the bgm
 
-    Mix_Music *bgm = Mix_LoadMUS("test.mp3");
+    Mix_Music *bgm = Mix_LoadMUS("bgm/test.mp3");
 
     //if the image wasn't able to be loaded
 
@@ -158,3 +158,4 @@ int main(){
   return 0;
 }
 
+:q!
