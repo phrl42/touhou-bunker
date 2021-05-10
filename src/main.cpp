@@ -109,7 +109,7 @@ int main(){
 	      std::cout << "entering game..." << std::endl;
 	      Mix_PauseMusic();
 	      SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	      SDL_Texture* texture = IMG_LoadTexture(renderer, "h.png");
+	      SDL_Texture* texture = IMG_LoadTexture(renderer, "img/reimuback.png");
 
 	      SDL_Rect texture_rect;
 	      texture_rect.x = 0;  //the x coordinate
