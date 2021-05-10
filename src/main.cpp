@@ -103,9 +103,8 @@ int main(){
 	      std::cout << "down press" << std::endl;
 	      break;
 	    case SDLK_q:
-	      menu = false;
 	      std::cout << "quitting menu..." << std::endl;
-	      break;
+	      return -1;
 	    case SDLK_RETURN: //this is the whole game lol
 	      std::cout << "entering game..." << std::endl;
 	      Mix_PauseMusic();
@@ -122,17 +121,28 @@ int main(){
 		SDL_RenderClear(renderer); //clears the renderer
 		SDL_RenderCopy(renderer, texture, NULL, &texture_rect); // copies the Renderer
 		SDL_RenderPresent(renderer); //updates the renderer
+		while(SDL_PollEvent(&ev) != 0){
+		  
+		  switch(ev.type){
+		    //Look for a keypress
+		  case SDL_KEYDOWN:
+		    //Check the SDLKey values
+		    switch(ev.key.keysym.sym){
+		      
+		    case SDLK_q:
+		      std::cout << "quitting out of stage1" << std::endl;
+		      return -1;
+		    default:
+		      break;
+		    }
+		  }
+		}
 	      }
+
 	      SDL_DestroyTexture(texture);
 	      break;
-
-	    
 	      
-	       
 	    }
-	    //there are 2 switch statements, so don't forget to break twice!(it was a pain to find that out)
-	    if(menu == false)
-	      break;
 	  }	  
 	}
       }
