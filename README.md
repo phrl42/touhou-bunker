@@ -3,7 +3,7 @@ This is a fan project made in C++ with SDL2 Libraries for fun!
 
 # Installation
 
-<p>Make sure to have the SDL2 and SDL2_image Libraries installed on your Distribution. </p>
+<p>Make sure to have the SDL2, SDL2_image and SDL2_mixer Libraries installed on your Distribution. </p>
 
 <p>Installation:</p>
 
