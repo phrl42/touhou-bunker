@@ -1,5 +1,5 @@
 # touhou-bunker
-This is a fan project made in C++ with SDL2 Libraries for fun!
+This is a Fan Project made in C++ with SDL2 Libraries for fun!
 
 # Installation
 
@@ -15,4 +15,4 @@ This is a fan project made in C++ with SDL2 Libraries for fun!
 This is the current Menu of the Game.
 
 # Contributing
-Feel free to make a PR anytime! But please no useless PR's. Thank you!
+Feel free to contribute anytime. No useless PR's desired.
