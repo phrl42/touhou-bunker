@@ -5,7 +5,7 @@ This is a fan project made in C++ with SDL2 Libraries for fun!
 
 <p>Make sure to have the SDL2 and SDL2_image Libraries installed on your Distribution. </p>
 
-<p>Installation Instructions:</p>
+<p>Installation:</p>
 
 `git clone https://github.com/phrl42/touhou-bunker.git && cd touhou-bunker/src && sh install.sh`
 
