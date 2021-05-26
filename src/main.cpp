@@ -91,16 +91,16 @@ int main(){
 	    switch(ev.key.keysym.sym){
 		  
 	    case SDLK_LEFT:
-	      std::cout << "left press" << std::endl;
+	      std::cout << "left" << std::endl;
 	      break;
 	    case SDLK_RIGHT:
-	      std::cout << "right press" << std::endl;
+	      std::cout << "right" << std::endl;
 	      break;
 	    case SDLK_UP:
-	      std::cout << "up press" << std::endl;
+	      std::cout << "up" << std::endl;
 	      break;
 	    case SDLK_DOWN:
-	      std::cout << "down press" << std::endl;
+	      std::cout << "down" << std::endl;
 	      break;
 	    case SDLK_q:
 	      std::cout << "quitting menu..." << std::endl;
@@ -108,19 +108,31 @@ int main(){
 	    case SDLK_RETURN: //this is the whole game lol
 	      std::cout << "entering game..." << std::endl;
 	      Mix_PauseMusic();
+	      SDL_DestroyWindow(window);
+	      
+	      window = SDL_CreateWindow("Touhou-Bunker",
+					SDL_WINDOWPOS_CENTERED,
+					SDL_WINDOWPOS_CENTERED,
+					640, 480,
+					SDL_WINDOW_SHOWN);
+
 	      SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	      
 	      SDL_Texture* texture = IMG_LoadTexture(renderer, "img/reimuback.png");
 
 	      SDL_Rect texture_rect;
-	      texture_rect.x = 0;  //the x coordinate
-	      texture_rect.y = 0; // the y coordinate
+	      texture_rect.x = 300;  //the x coordinate
+	      texture_rect.y = 400; // the y coordinate
 	      texture_rect.w = 50; //the width of the texture
 	      texture_rect.h = 50; //the height of the texture
+	      
+	      
 	      while(true){
 
 		SDL_RenderClear(renderer); //clears the renderer
 		SDL_RenderCopy(renderer, texture, NULL, &texture_rect); // copies the Renderer
 		SDL_RenderPresent(renderer); //updates the renderer
+		
 		while(SDL_PollEvent(&ev) != 0){
 		  
 		  switch(ev.type){
@@ -132,17 +144,34 @@ int main(){
 		    case SDLK_q:
 		      std::cout << "quitting out of stage1" << std::endl;
 		      return -1;
+
+		    case SDLK_LEFT:
+		      std::cout << "left" << std::endl;
+		      texture_rect.x -= 10;
+		      break;
+		      
+		    case SDLK_RIGHT:
+		      std::cout << "right" << std::endl;
+		      texture_rect.x += 10;
+		      break;
+		      
+		    case SDLK_UP:
+		      std::cout << "up" << std::endl;
+		      texture_rect.y -= 10;
+		      break;
+		      
+		    case SDLK_DOWN:
+		      std::cout << "down" << std::endl;
+		      texture_rect.y += 10;
+		      break;
+		      
 		    default:
 		      break;
 		    }
 		  }
 		}
 	      }
-
-	      SDL_DestroyTexture(texture);
-	      break;
-	      
-	    }
+      	    }
 	  }	  
 	}
       }
