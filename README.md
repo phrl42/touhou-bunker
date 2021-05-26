@@ -8,6 +8,6 @@ This is the current Menu of the Game.
 # Installation
 <p>Make sure to have the SDL2 and SDL2_image Libraries installed on your Distribution. </p>
 <p>Installation Instructions:</p>
-`git clone https://github.com/phrl42/touhou-bunker.git
+```git clone https://github.com/phrl42/touhou-bunker.git
  cd touhou-bunker/src
- sh install.sh`
+ sh install.sh```
