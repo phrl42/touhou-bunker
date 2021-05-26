@@ -7,11 +7,7 @@ This is a fan project made in C++ with SDL2 Libraries for fun!
 
 <p>Installation Instructions:</p>
 
-`git clone https://github.com/phrl42/touhou-bunker.git`
-
-`cd touhou-bunker/src`
-
-`sh install.sh`
+`git clone https://github.com/phrl42/touhou-bunker.git && cd touhou-bunker/src && sh install.sh`
 
 
 # Game
