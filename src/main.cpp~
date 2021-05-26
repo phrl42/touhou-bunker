@@ -108,7 +108,7 @@ int main(){
 	    case SDLK_RETURN: //this is the whole game lol
 	      std::cout << "entering game..." << std::endl;
 	      Mix_PauseMusic();
-	      //SDL_DestroyWindow(window);
+	      SDL_DestroyWindow(window);
 	      
 	      /*window = SDL_CreateWindow("Touhou-Bunker",
 					SDL_WINDOWPOS_CENTERED,
