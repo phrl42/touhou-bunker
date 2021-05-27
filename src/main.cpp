@@ -10,7 +10,11 @@ int main(){
   SDL_Surface *windowSurface = nullptr;
   SDL_Surface *imageSurface = nullptr;
   bool menu = true;
-  SDL_Event ev;
+  SDL_Event ev;  
+  const int FPS = 60;
+  const int frameDelay = 1000 / FPS;
+  Uint32 frameStart;
+  int frameTime;
   
   //This is for keyboard handling stuff
   
@@ -108,14 +112,7 @@ int main(){
 	    case SDLK_RETURN: //this is the whole game lol
 	      std::cout << "entering game..." << std::endl;
 	      Mix_PauseMusic();
-	      //SDL_DestroyWindow(window);
 	      
-	      /*window = SDL_CreateWindow("Touhou-Bunker",
-					SDL_WINDOWPOS_CENTERED,
-					SDL_WINDOWPOS_CENTERED,
-					640, 480,
-					SDL_WINDOW_SHOWN);*/
-
 	      SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	      
 	      SDL_Texture* texture = IMG_LoadTexture(renderer, "img/reimuback.png");
@@ -129,6 +126,14 @@ int main(){
 	      
 	      while(true){
 
+		frameStart = SDL_GetTicks();
+		
+		frameTime = SDL_GetTicks() - frameStart;
+
+		if(frameDelay > frameTime){
+		  SDL_Delay(frameDelay - frameTime);
+		}
+		
 		SDL_RenderClear(renderer); //clears the renderer
 		SDL_RenderCopy(renderer, texture, NULL, &texture_rect); // copies the Renderer
 		SDL_RenderPresent(renderer); //updates the renderer
@@ -147,22 +152,22 @@ int main(){
 
 		    case SDLK_LEFT:
 		      std::cout << "left" << std::endl;
-		      texture_rect.x -= 10;
+		      texture_rect.x -= 25;
 		      break;
 		      
 		    case SDLK_RIGHT:
 		      std::cout << "right" << std::endl;
-		      texture_rect.x += 10;
+		      texture_rect.x += 25;
 		      break;
 		      
 		    case SDLK_UP:
 		      std::cout << "up" << std::endl;
-		      texture_rect.y -= 10;
+		      texture_rect.y -= 25;
 		      break;
 		      
 		    case SDLK_DOWN:
 		      std::cout << "down" << std::endl;
-		      texture_rect.y += 10;
+		      texture_rect.y += 25;
 		      break;
 		      
 		    default:
