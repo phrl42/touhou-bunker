@@ -111,8 +111,10 @@ int main(){
 	      return -1;
 	    case SDLK_RETURN: //this is the whole game lol
 	      std::cout << "entering game..." << std::endl;
+
 	      Mix_PauseMusic();
-	      
+	      Mix_FreeMusic(bgm);
+
 	      SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	      
 	      SDL_Texture* texture = IMG_LoadTexture(renderer, "img/reimuback.png");
@@ -152,22 +154,22 @@ int main(){
 
 		    case SDLK_LEFT:
 		      std::cout << "left" << std::endl;
-		      texture_rect.x -= 25;
+		      texture_rect.x -= 20;
 		      break;
 		      
 		    case SDLK_RIGHT:
 		      std::cout << "right" << std::endl;
-		      texture_rect.x += 25;
+		      texture_rect.x += 20;
 		      break;
 		      
 		    case SDLK_UP:
 		      std::cout << "up" << std::endl;
-		      texture_rect.y -= 25;
+		      texture_rect.y -= 20;
 		      break;
 		      
 		    case SDLK_DOWN:
 		      std::cout << "down" << std::endl;
-		      texture_rect.y += 25;
+		      texture_rect.y += 20;
 		      break;
 		      
 		    default:
