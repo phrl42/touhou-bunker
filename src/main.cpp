@@ -15,6 +15,7 @@ int main(){
   const int frameDelay = 1000 / FPS;
   Uint32 frameStart;
   int frameTime;
+  const Uint8 *keyState;
   
   //This is for keyboard handling stuff
   
@@ -94,18 +95,6 @@ int main(){
 	    //Check the SDLKey values
 	    switch(ev.key.keysym.sym){
 		  
-	    case SDLK_LEFT:
-	      std::cout << "left" << std::endl;
-	      break;
-	    case SDLK_RIGHT:
-	      std::cout << "right" << std::endl;
-	      break;
-	    case SDLK_UP:
-	      std::cout << "up" << std::endl;
-	      break;
-	    case SDLK_DOWN:
-	      std::cout << "down" << std::endl;
-	      break;
 	    case SDLK_q:
 	      std::cout << "quitting menu..." << std::endl;
 	      return -1;
@@ -137,7 +126,7 @@ int main(){
 		}
 		
 		SDL_RenderClear(renderer); //clears the renderer
-		SDL_RenderCopy(renderer, texture, NULL, &texture_rect); // copies the Renderer
+		SDL_RenderCopy(renderer, texture, NULL, &texture_rect); // copies the Renderer with the textures
 		SDL_RenderPresent(renderer); //updates the renderer
 		
 		while(SDL_PollEvent(&ev) != 0){
@@ -151,32 +140,31 @@ int main(){
 		    case SDLK_q:
 		      std::cout << "quitting out of stage1" << std::endl;
 		      return -1;
-
-		    case SDLK_LEFT:
-		      std::cout << "left" << std::endl;
-		      texture_rect.x -= 20;
-		      break;
-		      
-		    case SDLK_RIGHT:
-		      std::cout << "right" << std::endl;
-		      texture_rect.x += 20;
-		      break;
-		      
-		    case SDLK_UP:
-		      std::cout << "up" << std::endl;
-		      texture_rect.y -= 20;
-		      break;
-		      
-		    case SDLK_DOWN:
-		      std::cout << "down" << std::endl;
-		      texture_rect.y += 20;
-		      break;
 		      
 		    default:
 		      break;
 		    }
 		  }
 		}
+
+		//awaiting keypress for every key
+		keyState = SDL_GetKeyboardState(NULL);
+		
+		if(keyState[SDL_SCANCODE_UP]){
+		  texture_rect.y -= 10;
+
+		}else if(keyState[SDL_SCANCODE_DOWN]){
+		  texture_rect.y += 10;
+	       
+		}else if(keyState[SDL_SCANCODE_LEFT]){
+		  texture_rect.x -= 10;
+
+		}else if(keyState[SDL_SCANCODE_RIGHT]){
+		  texture_rect.x += 10;
+		      
+		}
+
+		  
 	      }
       	    }
 	  }	  
