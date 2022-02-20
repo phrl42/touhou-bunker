@@ -1,6 +1,6 @@
 #include "init.h"
 
-void initWindow(SDL_Window *win, SDL_Surface *screen)
+void initWindow(SDL_Window *win, SDL_Renderer *rend)
 {
   if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
@@ -8,36 +8,42 @@ void initWindow(SDL_Window *win, SDL_Surface *screen)
       SDL_Quit();
     }
 
-  win = SDL_CreateWindow("touhou-bunker", 30, 30, 1280, 960, SDL_WINDOW_SHOWN);
+  win = SDL_CreateWindow("touhou-bunker", 30, 30,
+			 WINDOW_WIDTH, WINDOW_HEIGHT,
+			 SDL_WINDOW_SHOWN);
+
+  rend = SDL_CreateRenderer(win, -1,
+			    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+  if(!rend)
+    {
+      printf("renderer error: %s\n", SDL_GetError());
+    }
   
-  screen = SDL_GetWindowSurface(win);
 }
 
-bool bgLoad(SDL_Surface *background)
-{
-  int flags = IMG_INIT_PNG;
-  int imgFlags = IMG_Init(flags);
-  
-  if((flags&imgFlags) != flags)
-    {
-      printf("loading png library failed: %s\n", IMG_GetError());
-      return false;
-    }
-  
-  
-  background = IMG_Load("src/img/menu.png");
 
-  if(!background)
+bool bgLoad(SDL_Renderer *rend, SDL_Texture *bgTexture)
+{
+  IMG_Init(IMG_INIT_PNG);
+  
+  bgTexture = IMG_LoadTexture(rend, "src/img/menu.png");
+
+  if(!bgTexture)
     {
-      printf("IMG_Load: %s\n", IMG_GetError());
+      printf("bgtexture: %s\n", IMG_GetError());
       return false;
     }
+  
   return true;
 }
 
+//TODO: use typedefs or commit suicide god damnit
 
-void errorSolution(SDL_Window *win, SDL_Surface *background)
+
+void errorSolution(SDL_Window *win, SDL_Surface *background, SDL_Renderer *rend)
 {
+  SDL_DestroyRenderer(rend);
   SDL_FreeSurface(background);
   SDL_DestroyWindow(win);
   IMG_Quit();

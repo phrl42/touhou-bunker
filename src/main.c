@@ -1,26 +1,28 @@
 #include "init.h"
 
+
 int main()
 {
   SDL_Window *win = NULL;
-  
-  SDL_Surface *screen = NULL; // instead of using SDL_Renderer
+  SDL_Renderer *rend = NULL;
   SDL_Surface *background = NULL;
-
+  SDL_Texture *bgTexture;
+  
   SDL_Event ev;
   
   bool loopMenu = true;
   
-  initWindow(win, screen);
+  initWindow(win, rend);
 
-  if(bgLoad(background) == false)
+  if(!bgLoad(rend, bgTexture))
     {
       loopMenu = false;
     }
 
+  
   // actual menu loop
   while(loopMenu)
-    {
+    {      
       while(SDL_PollEvent(&ev))
 	{
 	  
@@ -32,7 +34,11 @@ int main()
 	    }
 	  
 	}
+
+      SDL_RenderClear(rend);
+      SDL_RenderCopy(rend, bgTexture, NULL, NULL);
+      SDL_RenderPresent(rend);
     }
 
-  errorSolution(win, background); 
+  errorSolution(win, background, rend); 
 }
