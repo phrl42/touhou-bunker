@@ -13,3 +13,11 @@ void initWindow(SDL_Window *win, SDL_Surface *screen)
   
   return;
 }
+
+void contentWindow(SDL_Surface *test, SDL_Rect *pos)
+{
+  pos->x = 640 / 2;
+  pos->y = 480;
+
+}
+

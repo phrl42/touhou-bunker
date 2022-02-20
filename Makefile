@@ -19,3 +19,6 @@ init.o:
 clean:
 	rm $(BIN)/touhou-bunker
 	rm $(OBJ)/*.o
+
+run:
+	$(BIN)/touhou-bunker
