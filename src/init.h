@@ -12,8 +12,8 @@
 
 // so that main knows how to call the function
 void initWindow(SDL_Window *win, SDL_Surface *screen);
-
-void errorSolution(SDL_Window *win, SDL_Surface *screen);
+bool bgLoad(SDL_Surface *background);
+void errorSolution(SDL_Window *win, SDL_Surface *background);
 
 
 #endif

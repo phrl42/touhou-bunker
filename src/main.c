@@ -3,19 +3,20 @@
 int main()
 {
   SDL_Window *win = NULL;
-  SDL_Surface *screen = NULL;
+  
+  SDL_Surface *screen = NULL; // instead of using SDL_Renderer
+  SDL_Surface *background = NULL;
 
   SDL_Event ev;
-
-  SDL_Surface *test = NULL;
-
   
   bool loopMenu = true;
   
   initWindow(win, screen);
 
-
-
+  if(bgLoad(background) == false)
+    {
+      loopMenu = false;
+    }
 
   // actual menu loop
   while(loopMenu)
@@ -33,5 +34,5 @@ int main()
 	}
     }
 
-  errorSolution(win, screen); 
+  errorSolution(win, background); 
 }
