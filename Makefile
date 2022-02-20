@@ -8,7 +8,7 @@ OBJ=obj
 all: touhou-bunker
 
 touhou-bunker: main.o init.o
-	$(CC) $(CFLAGS) -o $(BIN)/touhou-bunker $(OBJ)/main.o $(OBJ)/init.o 
+	$(CC) $(CFLAGS) -o touhou-bunker $(OBJ)/main.o $(OBJ)/init.o 
 
 main.o: 
 	$(CC) $(CFLAGS) -o $(OBJ)/main.o -c $(SRC)/main.c
@@ -17,8 +17,8 @@ init.o:
 	$(CC) $(CFLAGS) -o $(OBJ)/init.o -c $(SRC)/init.c
 
 clean:
-	rm $(BIN)/touhou-bunker
+	rm touhou-bunker
 	rm $(OBJ)/*.o
 
 run:
-	$(BIN)/touhou-bunker
+	./touhou-bunker

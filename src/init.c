@@ -25,7 +25,7 @@ bool bgLoad(SDL_Surface *background)
     }
   
   
-  background = IMG_Load("img/menu.png");
+  background = IMG_Load("src/img/menu.png");
 
   if(!background)
     {
