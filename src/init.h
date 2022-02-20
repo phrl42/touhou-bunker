@@ -8,12 +8,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
-
-// so that main knows how to call the function
+/* so that main knows how to call the function */
 void initWindow(SDL_Window *win, SDL_Surface *screen);
 void errorSolution(SDL_Window *win, SDL_Surface *screen);
-
 
 #endif
 
