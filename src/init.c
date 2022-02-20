@@ -4,7 +4,6 @@ void initWindow(SDL_Window *win, SDL_Surface *screen) {
 	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		printf("initializing sdl failed: %s\n", SDL_GetError());
 			SDL_Quit();
-			return EXIT_SUCCESS;
 	}
 
 	win = SDL_CreateWindow("title", 30, 30, 1280, 960, SDL_WINDOW_SHOWN);
