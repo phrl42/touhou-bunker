@@ -1,21 +1,14 @@
-#include <stdbool.h>
-#include <stdio.h>
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-
-
 #include "init.h"
 
 int main()
 {
-  SDL_Window *win;
-  SDL_Surface *screen;
+  SDL_Window *win = NULL;
+  SDL_Surface *screen = NULL;
+
   SDL_Event ev;
   SDL_Rect pos;
-  SDL_Surface *test;
 
+  
   bool loopMenu = true;
   
   initWindow(win, screen);
@@ -34,11 +27,6 @@ int main()
 	  
 	}
     }
-  
-  SDL_FreeSurface(test);
-  SDL_FreeSurface(screen);
-  SDL_DestroyWindow(win);
-  SDL_Quit();
-  
-  return 0;
+
+  errorSolution(win, screen); 
 }
