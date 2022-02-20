@@ -8,25 +8,21 @@ int main()
   SDL_Event ev;
   SDL_Rect pos;
 
-  
-  bool loopMenu = true;
-  
-  initWindow(win, screen);
-  
-  while(loopMenu)
-    {
-      while(SDL_PollEvent(&ev))
-	{
-	  
-	  switch(ev.type)
-	    {  
-	      case SDL_QUIT:
-		loopMenu = false;
-		break;
-	    }
-	  
-	}
-    }
 
-  errorSolution(win, screen); 
+  bool loopMenu = true;
+
+  initWindow(win, screen);
+
+  while(loopMenu) {
+      while(SDL_PollEvent(&ev)) {
+	  		switch(ev.type) {
+	      	case SDL_QUIT:
+						loopMenu = false;
+						break;
+	    	}
+			}
+  }
+
+  errorSolution(win, screen);
 }
+
