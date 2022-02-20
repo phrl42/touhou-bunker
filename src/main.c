@@ -6,13 +6,18 @@ int main()
   SDL_Surface *screen = NULL;
 
   SDL_Event ev;
-  SDL_Rect pos;
+
+  SDL_Surface *test = NULL;
 
   
   bool loopMenu = true;
   
   initWindow(win, screen);
-  
+
+
+
+
+  // actual menu loop
   while(loopMenu)
     {
       while(SDL_PollEvent(&ev))
@@ -21,8 +26,8 @@ int main()
 	  switch(ev.type)
 	    {  
 	      case SDL_QUIT:
-		loopMenu = false;
-		break;
+	        loopMenu = false;
+	        break;
 	    }
 	  
 	}
