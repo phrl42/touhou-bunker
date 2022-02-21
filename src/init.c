@@ -1,21 +1,22 @@
 #include "init.h"
 
-void initWindow(SDL_Window *win, SDL_Renderer *rend)
+void initWindow()
 {
+  
   if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
       printf("initializing sdl failed: %s\n", SDL_GetError());
       SDL_Quit();
     }
 
-  win = SDL_CreateWindow("touhou-bunker", 30, 30,
-			 WINDOW_WIDTH, WINDOW_HEIGHT,
-			 SDL_WINDOW_SHOWN);
+  menu->win = SDL_CreateWindow("touhou-bunker", 30, 30,
+			      WINDOW_WIDTH, WINDOW_HEIGHT,
+			      SDL_WINDOW_SHOWN);
 
-  rend = SDL_CreateRenderer(win, -1,
-			    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  menu->rend = SDL_CreateRenderer(menu->win, -1,
+				 SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-  if(!rend)
+  if(!menu->rend)
     {
       printf("renderer error: %s\n", SDL_GetError());
     }
@@ -23,7 +24,7 @@ void initWindow(SDL_Window *win, SDL_Renderer *rend)
 }
 
 
-bool bgLoad(SDL_Renderer *rend, SDL_Texture *bgTexture)
+/*bool bgLoad()
 {
   IMG_Init(IMG_INIT_PNG);
   
@@ -36,16 +37,16 @@ bool bgLoad(SDL_Renderer *rend, SDL_Texture *bgTexture)
     }
   
   return true;
-}
+  }*/
 
 //TODO: use typedefs or commit suicide god damnit
 
 
-void errorSolution(SDL_Window *win, SDL_Surface *background, SDL_Renderer *rend)
+void errorSolution()
 {
-  SDL_DestroyRenderer(rend);
-  SDL_FreeSurface(background);
-  SDL_DestroyWindow(win);
+  SDL_DestroyRenderer(menu->rend);
+  SDL_FreeSurface(menu->background);
+  SDL_DestroyWindow(menu->win);
   IMG_Quit();
   SDL_Quit();
 }

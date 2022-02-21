@@ -1,20 +1,14 @@
 #include "init.h"
 
-
 int main()
 {
-  SDL_Window *win = NULL;
-  SDL_Renderer *rend = NULL;
-  SDL_Surface *background = NULL;
-  SDL_Texture *bgTexture;
-  
   SDL_Event ev;
   
   bool loopMenu = true;
   
-  initWindow(win, rend);
+  initWindow();
 
-  if(!bgLoad(rend, bgTexture))
+  if(!bgLoad())
     {
       loopMenu = false;
     }
@@ -34,11 +28,7 @@ int main()
 	    }
 	  
 	}
-
-      SDL_RenderClear(rend);
-      SDL_RenderCopy(rend, bgTexture, NULL, NULL);
-      SDL_RenderPresent(rend);
     }
 
-  errorSolution(win, background, rend); 
+  errorSolution(); 
 }
