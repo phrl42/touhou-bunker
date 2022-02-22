@@ -3,14 +3,10 @@
 
 #include "incs.h"
 
-typedef struct {
-  SDL_Window *win;
-  SDL_Renderer *rend;
-  SDL_Surface *background;
-  SDL_Texture *bgTexture;
-} Menu;
-
-struct Menu *menu;
+extern SDL_Window *win;
+extern SDL_Renderer *rend;
+extern SDL_Surface *background;
+extern SDL_Texture *bgTexture;
 
 // so that main knows how to call the function
 void initWindow();

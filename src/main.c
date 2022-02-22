@@ -12,21 +12,31 @@ int main()
     {
       loopMenu = false;
     }
-
   
   // actual menu loop
   while(loopMenu)
-    {      
+    {
+
+      // clear the window
+      
+      SDL_RenderClear(rend);
+
+      // draw image to window
+
+      SDL_RenderCopy(rend, bgTexture, NULL, NULL);
+
+      // switch back buffer with front buffer
+      
+      SDL_RenderPresent(rend);
+      
       while(SDL_PollEvent(&ev))
 	{
-	  
 	  switch(ev.type)
 	    {  
-	      case SDL_QUIT:
-	        loopMenu = false;
-	        break;
-	    }
-	  
+	    case SDL_QUIT:
+	      loopMenu = false;
+	      break;
+	    } 
 	}
     }
 
