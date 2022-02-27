@@ -2,11 +2,15 @@
 
 int main()
 {
-  int menu;
   SDL_Event ev; 
+
   bool loopMenu = true;
   
+  int menu;
+
   initWindow();
+
+  Mix_Music *select = Mix_LoadMUS("src/bgm/select.ogg");
 
   if(!bgLoad())
     {
@@ -39,28 +43,35 @@ int main()
 	         break;
 
           case SDL_KEYDOWN:
+
+
             switch(ev.key.keysym.sym)
             {
               case SDLK_UP:
                 menu = -1;
                 menuHover(menu);
+                Mix_PlayMusic(select, 1);
                 break;
               
               case SDLK_DOWN:
                 menu = 1;
                 menuHover(menu);
+                Mix_PlayMusic(select, 1);
                 break;
 
               case SDLK_RETURN:
+                Mix_PlayMusic(select, 1);
                 if(!menuExecute())
                 {
                   loopMenu = false;
                 }
+                
                 break;
 
               default:
                 break;
             }
+
            default: 
            break;
 	      }

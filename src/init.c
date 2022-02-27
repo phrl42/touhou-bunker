@@ -32,6 +32,7 @@ void initWindow()
     {
       printf("initializing sdl failed: %s\n", SDL_GetError());
       SDL_Quit();
+      exit(1);
     }
 
   // create a window
@@ -47,6 +48,22 @@ void initWindow()
     {
       printf("renderer error: %s\n", SDL_GetError());
     }
+
+  if(Mix_Init(MIX_INIT_OGG) == 0)
+  {
+    printf("mixer failure: %s\n", Mix_GetError());
+    Mix_Quit();
+    SDL_Quit();
+  }
+
+  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+  {
+    printf("mixer open audio failure: %s\n", Mix_GetError());
+    Mix_Quit();
+    SDL_Quit();
+    exit(2);
+  }
+  Mix_VolumeMusic(MIX_MAX_VOLUME / 15);
 }
 
 void initFont()
@@ -181,6 +198,8 @@ void errorSolution()
   SDL_DestroyTexture(texturefont0);
   SDL_DestroyTexture(texturefont1);
 
+  Mix_CloseAudio();
+  Mix_Quit();
   TTF_Quit();
   SDL_Quit();
 }
