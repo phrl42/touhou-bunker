@@ -169,7 +169,7 @@ bool bgLoad()
   
 }
 
-//TODO: use typedefs or commit suicide god damnit
+//TODO: use typedefs or commit suicide god dammit
 // i am too stupid for typedefs so I'll just use global variables || please dont kill me
 
 void errorSolution()
@@ -185,4 +185,3 @@ void errorSolution()
   TTF_Quit();
   SDL_Quit();
 }
-
