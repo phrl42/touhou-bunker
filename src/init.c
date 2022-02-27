@@ -166,7 +166,6 @@ bool bgLoad()
     }
 
   return true;
-  
 }
 
 //TODO: use typedefs or commit suicide god dammit
