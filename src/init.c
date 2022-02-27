@@ -1,13 +1,21 @@
 #include "init.h"
+#include <SDL2/SDL_render.h>
 
 SDL_Window *win;
 SDL_Renderer *rend;
-SDL_Surface *background;
-SDL_Texture *bgTexture; 
+SDL_Texture *bgTexture;
+
+// there has to be a solution for this
+SDL_Rect rectfont0 = {(WINDOW_WIDTH / 2) + 400 ,(WINDOW_HEIGHT / 2), FONT_MENU_WIDTH, FONT_MENU_HEIGHT};
+SDL_Rect rectfont1 = {(WINDOW_WIDTH / 2) + 400, (WINDOW_HEIGHT / 2) + 100, FONT_MENU_WIDTH, FONT_MENU_HEIGHT};
+TTF_Font *font0;
+SDL_Texture *texturefont0;
+
+TTF_Font *font1;
+SDL_Texture *texturefont1;
 
 void initWindow()
 {
-
   // initialize SDL
   
   if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -15,6 +23,8 @@ void initWindow()
       printf("initializing sdl failed: %s\n", SDL_GetError());
       SDL_Quit();
     }
+
+  // create a window
 
   win = SDL_CreateWindow("touhou-bunker", 30, 30,
 			 WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -29,14 +39,42 @@ void initWindow()
     {
       printf("renderer error: %s\n", SDL_GetError());
     }
+}
+
+void initFont()
+{
+  int w = FONT_MENU_WIDTH;
+  int h = FONT_MENU_HEIGHT;
+
+  if(TTF_Init() == -1)
+    {
+      printf("failed to load sdl2-ttf: %s\n", TTF_GetError());
+    }
   
+  font0 = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 25); 
+
+  SDL_Color colorOff = { 255, 255, 255 };
+  // create surface for font
+  SDL_Surface *surfacefont0 = TTF_RenderText_Solid(font0, "Start", colorOff);
+  // create texture to load into hardware
+  texturefont0 = SDL_CreateTextureFromSurface(rend, surfacefont0);
+  // give font dimensions
+  SDL_QueryTexture(texturefont0, NULL, NULL, &w, &h);
+  // clear from memory
+  SDL_FreeSurface(surfacefont0);
+
+  SDL_Surface *surfacefont1 = TTF_RenderText_Solid(font1, "Quit", colorOff); // this is causing something
+  texturefont1 = SDL_CreateTextureFromSurface(rend, surfacefont1);
+  SDL_QueryTexture(texturefont1, NULL, NULL, &w, &h);
+
+  SDL_FreeSurface(surfacefont1);
 }
 
 bool bgLoad()
 {
   // loading image into memory
   
-  background = IMG_Load("src/img/menu.png");
+  SDL_Surface *background = IMG_Load("src/img/menu.png");
 
   if(!background)
     {
@@ -71,7 +109,12 @@ void errorSolution()
   SDL_DestroyTexture(bgTexture);
   SDL_DestroyRenderer(rend);
   SDL_DestroyWindow(win);
-  
+
+  TTF_CloseFont(font0);
+  SDL_DestroyTexture(texturefont0);
+  SDL_DestroyTexture(texturefont1);
+
+
   SDL_Quit();
 }
 

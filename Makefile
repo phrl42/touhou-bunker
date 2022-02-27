@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-Wall -Wextra -Wpedantic -g -lSDL2 -lSDL2_image -lSDL2_mixer
+CFLAGS=-Wall -Wextra -Wpedantic -g -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 SRC=src
 BIN=bin
