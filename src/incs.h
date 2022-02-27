@@ -15,4 +15,6 @@
 #define FONT_MENU_HEIGHT 50
 #define FONT_MENU_WIDTH 100
 
+#define MENU_ENTRIES 1 // lol dont ask
+
 #endif

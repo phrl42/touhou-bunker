@@ -18,6 +18,7 @@ extern SDL_Texture *texturefont1;
 // so that main knows how to call the function
 void initWindow();
 void initFont();
+void menuHover(int menu);
 bool bgLoad();
 void errorSolution();
 
