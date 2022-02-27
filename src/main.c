@@ -51,6 +51,13 @@ int main()
                 menuHover(menu);
                 break;
 
+              case SDLK_RETURN:
+                if(!menuExecute())
+                {
+                  loopMenu = false;
+                }
+                break;
+
               default:
                 break;
             }

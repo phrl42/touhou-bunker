@@ -93,6 +93,7 @@ void menuHover(int menu)
 
   switch(menuLocation)
   {
+    // START
     case 0:
       // reset non-active label
       surfacefont1 = TTF_RenderText_Solid(font1, "Quit", colorOff); 
@@ -107,6 +108,7 @@ void menuHover(int menu)
       SDL_FreeSurface(surfacefont0);
       break;
     
+    // QUIT
     case 1: 
       // reset non-active label
       surfacefont0 = TTF_RenderText_Solid(font0, "Start", colorOff); 
@@ -121,6 +123,23 @@ void menuHover(int menu)
       SDL_FreeSurface(surfacefont1);
       break;
   }
+}
+
+bool menuExecute()
+{
+  switch(menuLocation)
+  {
+    // START
+    case 0:
+      printf("in progress\n");
+      break;
+    
+    // QUIT
+    case 1:
+      return false;
+      break;
+  }
+  return true;
 }
 
 bool bgLoad()

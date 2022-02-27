@@ -19,6 +19,7 @@ extern SDL_Texture *texturefont1;
 void initWindow();
 void initFont();
 void menuHover(int menu);
+bool menuExecute();
 bool bgLoad();
 void errorSolution();
 
