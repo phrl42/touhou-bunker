@@ -26,7 +26,7 @@ int main()
 
       SDL_RenderCopy(rend, bgTexture, NULL, NULL);
       SDL_RenderCopy(rend, texturefont0, NULL, &rectfont0);
-      //SDL_RenderCopy(rend, texturefont1, NULL, &rectfont1);
+      SDL_RenderCopy(rend, texturefont1, NULL, &rectfont1);
 
       // switch back buffer with front buffer
       

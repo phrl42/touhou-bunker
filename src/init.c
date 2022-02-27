@@ -52,6 +52,7 @@ void initFont()
     }
   
   font0 = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 25); 
+  font1 = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 25);
 
   SDL_Color colorOff = { 255, 255, 255 };
   // create surface for font
@@ -63,7 +64,7 @@ void initFont()
   // clear from memory
   SDL_FreeSurface(surfacefont0);
 
-  SDL_Surface *surfacefont1 = TTF_RenderText_Solid(font1, "Quit", colorOff); // this is causing something
+  SDL_Surface *surfacefont1 = TTF_RenderText_Solid(font1, "Quit", colorOff); 
   texturefont1 = SDL_CreateTextureFromSurface(rend, surfacefont1);
   SDL_QueryTexture(texturefont1, NULL, NULL, &w, &h);
 

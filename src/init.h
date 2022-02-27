@@ -8,7 +8,7 @@ extern SDL_Renderer *rend;
 extern SDL_Texture *bgTexture;
 
 extern SDL_Rect rectfont0;
-//extern SDL_Rect rectfont1;
+extern SDL_Rect rectfont1;
 extern TTF_Font *font0;
 extern SDL_Texture *texturefont0;
 
