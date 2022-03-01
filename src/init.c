@@ -1,15 +1,16 @@
 #include "init.h"
 #include <SDL2/SDL_render.h>
 
+
 SDL_Window *win;
 SDL_Renderer *rend;
-SDL_Texture *bgTexture;
 
-// there has to be a better solution for this
+//-------------MENU STUFF---------------
 SDL_Rect rectfont0 = {(WINDOW_WIDTH / 2) + 400 ,(WINDOW_HEIGHT / 2), FONT_MENU_WIDTH, FONT_MENU_HEIGHT};
 SDL_Rect rectfont1 = {(WINDOW_WIDTH / 2) + 370, (WINDOW_HEIGHT / 2) + 55, FONT_MENU_WIDTH, FONT_MENU_HEIGHT};
 TTF_Font *font0;
 SDL_Texture *texturefont0;
+SDL_Texture *bgTexture;
 
 TTF_Font *font1;
 SDL_Texture *texturefont1;
@@ -24,6 +25,10 @@ SDL_Color colorOn = { 255, 255, 0 };
 
 SDL_Surface *surfacefont0;
 SDL_Surface *surfacefont1;
+
+//-------------STAGE 1 STUFF---------------
+SDL_Texture *bgStageOne;
+
 
 void initWindow()
 {
@@ -148,15 +153,18 @@ bool menuExecute()
   {
     // START
     case 0:
-      printf("in progress\n");
+      return true;
       break;
     
     // QUIT
     case 1:
       return false;
       break;
+    
+    default:
+      return true;
+      break;
   }
-  return true;
 }
 
 bool bgLoad()
@@ -188,15 +196,32 @@ bool bgLoad()
 //TODO: use typedefs or commit suicide god dammit
 // i am too stupid for typedefs so I'll just use global variables || please dont kill me
 
+void stageOneInit()
+{
+  SDL_DestroyTexture(texturefont0);
+  SDL_DestroyTexture(texturefont1);
+  SDL_DestroyTexture(bgTexture);
+
+  SDL_Surface *surfaceStageOne = IMG_Load("src/img/bg.png");
+
+  bgStageOne = SDL_CreateTextureFromSurface(rend, surfaceStageOne);
+
+  SDL_FreeSurface(surfaceStageOne);
+}
+
 void errorSolution()
 {
-  SDL_DestroyTexture(bgTexture);
   SDL_DestroyRenderer(rend);
   SDL_DestroyWindow(win);
 
+  //-------------MENU STUFF---------------
   TTF_CloseFont(font0);
   SDL_DestroyTexture(texturefont0);
   SDL_DestroyTexture(texturefont1);
+  SDL_DestroyTexture(bgTexture);
+
+  //-------------STAGE 1 STUFF---------------
+  SDL_DestroyTexture(bgStageOne);
 
   Mix_CloseAudio();
   Mix_Quit();
