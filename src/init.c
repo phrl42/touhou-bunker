@@ -20,8 +20,8 @@ int h = FONT_MENU_HEIGHT;
 
 int menuLocation = 0;
 
-SDL_Color colorOff = { 255, 255, 255 };
-SDL_Color colorOn = { 255, 255, 0 };
+SDL_Color colorOff = { 255, 255, 255, 255 };
+SDL_Color colorOn = { 255, 255, 0, 255 };
 
 SDL_Surface *surfacefont0;
 SDL_Surface *surfacefont1;
