@@ -1,24 +1,32 @@
-CC=cc
-CFLAGS=-Wall -Wextra -Wpedantic -g -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+SRC_DIR = src/
+OBJ_DIR = bin/
+INC_DIR = include/
 
-SRC=src
-BIN=bin
-OBJ=obj
+NAME = touhou-bunker
 
-all: touhou-bunker
+SRCS = main.c init.c
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 
-touhou-bunker: main.o init.o
-	$(CC) $(CFLAGS) -o touhou-bunker $(OBJ)/main.o $(OBJ)/init.o 
+CC = cc
+CFLAGS = -Wall -Wextra -Wpedantic -g -I$(INC_DIR)
+LFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
-main.o: 
-	$(CC) $(CFLAGS) -o $(OBJ)/main.o -c $(SRC)/main.c
+all: $(NAME)
 
-init.o:
-	$(CC) $(CFLAGS) -o $(OBJ)/init.o -c $(SRC)/init.c
+$(NAME): $(OBJ_DIR) $(OBJS)
+	$(CC) $(CLFAGS) $(OBJS) $(LFLAGS) -o $(NAME)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	rm touhou-bunker
-	rm $(OBJ)/*.o
+	rm -rf $(OBJ_DIR)
+	rm -f $(NAME)
+
+re: clean all
 
 run:
-	./touhou-bunker
+	./$(NAME)
