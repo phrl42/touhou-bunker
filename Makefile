@@ -30,3 +30,5 @@ re: clean all
 
 run:
 	./$(NAME)
+
+.PHONY: all clean re run
