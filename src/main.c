@@ -62,6 +62,7 @@ int main()
 
         case SDLK_RETURN:
           Mix_PlayChannel(-1, select, 0);
+          SDL_Delay(300); // otherwise you wont be able to hear the sound effect
           if (!menuExecute())
           {
             loopMenu = false;
@@ -82,7 +83,7 @@ int main()
       }
     }
   }
-  
+
   Mix_FreeChunk(select);
   Mix_FreeChunk(menuBGM);
   stageOneInit();
