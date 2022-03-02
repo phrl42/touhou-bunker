@@ -11,7 +11,8 @@ int main()
 
   initWindow();
 
-  Mix_Music *select = Mix_LoadMUS("src/bgm/select.ogg");
+  Mix_Chunk *select = Mix_LoadWAV("src/bgm/select.wav");
+  Mix_Chunk *menuBGM = Mix_LoadWAV("src/bgm/menu.wav");
 
   if (!bgLoad())
   {
@@ -20,8 +21,7 @@ int main()
 
   initFont();
 
-  Mix_Music *menuBGM = Mix_LoadMUS("src/bgm/menu.ogg");
-  Mix_PlayMusic(menuBGM, -1);
+  Mix_PlayChannel(-1, menuBGM, -1);
 
   // actual menu loop
   while (loopMenu)
@@ -51,17 +51,17 @@ int main()
         case SDLK_UP:
           menu = -1;
           menuHover(menu);
-          Mix_PlayMusic(select, 1);
+          Mix_PlayChannel(-1, select, 0);
           break;
 
         case SDLK_DOWN:
           menu = 1;
           menuHover(menu);
-          Mix_PlayMusic(select, 1);
+          Mix_PlayChannel(-1, select, 0);
           break;
 
         case SDLK_RETURN:
-          Mix_PlayMusic(select, 1);
+          Mix_PlayChannel(-1, select, 0);
           if (!menuExecute())
           {
             loopMenu = false;

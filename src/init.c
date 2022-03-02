@@ -34,11 +34,11 @@ void initWindow()
 {
   // initialize SDL
   if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
-    {
-      printf("initializing sdl failed: %s\n", SDL_GetError());
-      SDL_Quit();
-      exit(1);
-    }
+  {
+    printf("initializing sdl failed: %s\n", SDL_GetError());
+    SDL_Quit();
+    exit(1);
+  }
 
   // create a window
   win = SDL_CreateWindow("touhou-bunker", 30, 30,
@@ -50,9 +50,9 @@ void initWindow()
 			    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
   if(!rend)
-    {
-      printf("renderer error: %s\n", SDL_GetError());
-    }
+  {
+    printf("renderer error: %s\n", SDL_GetError());
+  }
 
   if(Mix_Init(MIX_INIT_OGG) == 0)
   {
@@ -61,7 +61,7 @@ void initWindow()
     SDL_Quit();
   }
 
-  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+  if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
   {
     printf("mixer open audio failure: %s\n", Mix_GetError());
     Mix_Quit();
@@ -69,13 +69,8 @@ void initWindow()
     exit(2);
   }
   Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
+  Mix_AllocateChannels(8);
 }
-
-/*void playMenu()
-{
-  Mix_Music *menu = Mix_LoadMUS("src/bgm/menu.ogg");
-  Mix_PlayMusic(menu, -1);
-}*/
 
 void initFont()
 {
