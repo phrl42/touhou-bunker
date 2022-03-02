@@ -68,8 +68,14 @@ void initWindow()
     SDL_Quit();
     exit(2);
   }
-  Mix_VolumeMusic(MIX_MAX_VOLUME / 15);
+  Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 }
+
+/*void playMenu()
+{
+  Mix_Music *menu = Mix_LoadMUS("src/bgm/menu.ogg");
+  Mix_PlayMusic(menu, -1);
+}*/
 
 void initFont()
 {

@@ -16,6 +16,7 @@ extern SDL_Texture *texturefont0;
 extern TTF_Font *font1;
 extern SDL_Texture *texturefont1;
 
+
 //-------------STAGE 1 STUFF---------------
 extern SDL_Texture *bgStageOne;
 

@@ -20,6 +20,9 @@ int main()
 
   initFont();
 
+  Mix_Music *menuBGM = Mix_LoadMUS("src/bgm/menu.ogg");
+  Mix_PlayMusic(menuBGM, -1);
+
   // actual menu loop
   while (loopMenu)
   {
