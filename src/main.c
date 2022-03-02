@@ -82,7 +82,9 @@ int main()
       }
     }
   }
-
+  
+  Mix_FreeChunk(select);
+  Mix_FreeChunk(menuBGM);
   stageOneInit();
 
   while (stage1)
