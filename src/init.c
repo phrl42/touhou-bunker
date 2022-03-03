@@ -206,8 +206,8 @@ void stageOneInit()
   bgStageOne = SDL_CreateTextureFromSurface(rend, surfaceStageOne);
 
   SDL_FreeSurface(surfaceStageOne);
-  //working on it
-  //SDL_Surface *surfaceMap = IMG_Load("src/img/");
+  
+  SDL_Surface *surfaceMap = IMG_Load("src/img/");
 }
 
 void errorSolution()
