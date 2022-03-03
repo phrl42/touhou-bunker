@@ -27,6 +27,7 @@ SDL_Surface *surfacefont1;
 
 //-------------STAGE 1 STUFF---------------
 SDL_Texture *bgStageOne;
+SDL_Texture *bgFilled;
 
 void initWindow()
 {
@@ -207,7 +208,9 @@ void stageOneInit()
 
   SDL_FreeSurface(surfaceStageOne);
   
-  //SDL_Surface *surfaceMap = IMG_Load("src/img/");
+  SDL_Surface *surfaceMap = IMG_Load("src/img/bgFilled.png");
+
+  
 }
 
 void errorSolution()
