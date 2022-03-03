@@ -114,6 +114,7 @@ int main()
         break;
       }
     }
+    printf("player.x : %d\n player.y : %d\n", rectPlayer.x, rectPlayer.y);
     movementPlayer();
   }
 

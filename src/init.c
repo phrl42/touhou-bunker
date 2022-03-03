@@ -38,7 +38,7 @@ SDL_Rect rectHighScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35), FONT_M
 SDL_Rect rectScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35) + 100, FONT_MENU_WIDTH, FONT_MENU_HEIGHT - 10};
 
 SDL_Texture *player;
-SDL_Rect rectPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)), 80, 90};
+SDL_Rect rectPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
 
 //-------------STAGE 1 STUFF---------------
 SDL_Texture *bgStageOne;
@@ -275,23 +275,19 @@ void movementPlayer()
 
   if(keys[SDL_SCANCODE_UP] == 1)
   {
-    printf("con\n");
     rectPlayer.y -= speed;  
   }
   if(keys[SDL_SCANCODE_DOWN] == 1)
   {
-    printf("consen\n");
     rectPlayer.y += speed;
   }
   if(keys[SDL_SCANCODE_LEFT] == 1)
   {
-    printf("consenbrink\n");
     rectPlayer.x -= speed;
   }
   if(keys[SDL_SCANCODE_RIGHT] == 1)
   {
     rectPlayer.x += speed;
-    printf("consenbrinkler\n");
   }
 }
 
