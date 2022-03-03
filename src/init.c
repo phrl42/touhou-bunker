@@ -207,7 +207,7 @@ void stageOneInit()
 
   SDL_FreeSurface(surfaceStageOne);
   
-  SDL_Surface *surfaceMap = IMG_Load("src/img/");
+  //SDL_Surface *surfaceMap = IMG_Load("src/img/");
 }
 
 void errorSolution()
