@@ -49,15 +49,15 @@ int main()
         switch (ev.key.keysym.sym)
         {
         case SDLK_UP:
+          Mix_PlayChannel(-1, select, 0);
           menu = -1;
           menuHover(menu);
-          Mix_PlayChannel(-1, select, 0);
           break;
 
         case SDLK_DOWN:
+          Mix_PlayChannel(-1, select, 0);
           menu = 1;
           menuHover(menu);
-          Mix_PlayChannel(-1, select, 0);
           break;
 
         case SDLK_RETURN:

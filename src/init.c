@@ -201,11 +201,13 @@ void stageOneInit()
   SDL_DestroyTexture(texturefont1);
   SDL_DestroyTexture(bgTexture);
 
-  SDL_Surface *surfaceStageOne = IMG_Load("src/img/bg.png");
+  SDL_Surface *surfaceStageOne = IMG_Load("src/img/bgFilled.png");
 
   bgStageOne = SDL_CreateTextureFromSurface(rend, surfaceStageOne);
 
   SDL_FreeSurface(surfaceStageOne);
+
+  SDL_Surface *surfaceMap = IMG_Load("src/img/");
 }
 
 void errorSolution()

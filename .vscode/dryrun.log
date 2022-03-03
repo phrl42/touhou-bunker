@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/pherel/Tools/Projects/touhou-bunker'
+mkdir -p bin/
+cc -Wall -Wextra -Wpedantic -g -Iinclude/ -c src/main.c -o bin/main.o
+cc -Wall -Wextra -Wpedantic -g -Iinclude/ -c src/init.c -o bin/init.o
+cc -Wall -Wextra -Wpedantic -g -Iinclude/ bin/main.o bin/init.o -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -o touhou-bunker
+make: Leaving directory '/home/pherel/Tools/Projects/touhou-bunker'
+ 
