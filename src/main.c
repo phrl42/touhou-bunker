@@ -87,7 +87,6 @@ int main()
   Mix_FreeChunk(select);
   Mix_FreeChunk(menuBGM);
 
-
   stagesPrepare();
   stageOnePrepare();
 
@@ -99,7 +98,7 @@ int main()
     // draw stuff
     SDL_RenderCopy(rend, bgStages, NULL, NULL);
     SDL_RenderCopy(rend, bgStageOne, NULL, &rectStageArea);
-    SDL_RenderCopy(rend, player, &rectStageArea, &rectPlayer);
+    SDL_RenderCopy(rend, player, NULL, &rectPlayer);
     SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);
     SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
 

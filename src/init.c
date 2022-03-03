@@ -17,6 +17,7 @@ SDL_Texture *texturefont1;
 int w = FONT_MENU_WIDTH;
 int h = FONT_MENU_HEIGHT;
 
+int speed = 8;
 int menuLocation = 0;
 
 SDL_Color colorOff = {255, 255, 255, 255};
@@ -37,7 +38,7 @@ SDL_Rect rectHighScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35), FONT_M
 SDL_Rect rectScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35) + 100, FONT_MENU_WIDTH, FONT_MENU_HEIGHT - 10};
 
 SDL_Texture *player;
-SDL_Rect rectPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)),  32, 32};
+SDL_Rect rectPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)), 80, 90};
 
 //-------------STAGE 1 STUFF---------------
 SDL_Texture *bgStageOne;
@@ -246,7 +247,7 @@ void stagesPrepare()
   SDL_FreeSurface(surfaceScore);
 
   //--------------Player-------------------
-  SDL_Surface *surfacePlayer = IMG_Load("src/img/reimuback.png");
+  SDL_Surface *surfacePlayer = IMG_Load("src/img/reimu0.png");
   player = SDL_CreateTextureFromSurface(rend, surfacePlayer);
   SDL_FreeSurface(surfacePlayer);
 }
@@ -254,11 +255,8 @@ void stagesPrepare()
 void stageOnePrepare()
 {
   SDL_Surface *surfaceStageOne = IMG_Load("src/img/bgStageOne.png");
-
   bgStageOne = SDL_CreateTextureFromSurface(rend, surfaceStageOne);
-
   SDL_FreeSurface(surfaceStageOne);
-
 }
 
 void movementPlayer()
@@ -266,24 +264,33 @@ void movementPlayer()
   // this fixed the ,,start-stop'' issue by getting a snapshot of the current keyboard ; refer to the SDL2 Documentation
   keys = SDL_GetKeyboardState(NULL);
 
+  if(keys[SDL_SCANCODE_LSHIFT] == 1)
+  {
+    speed = 4;
+  }
+  else
+  {
+    speed = 8;
+  }
+
   if(keys[SDL_SCANCODE_UP] == 1)
   {
     printf("con\n");
-    rectPlayer.y -= 10;  
+    rectPlayer.y -= speed;  
   }
   if(keys[SDL_SCANCODE_DOWN] == 1)
   {
     printf("consen\n");
-    rectPlayer.y += 10;
+    rectPlayer.y += speed;
   }
   if(keys[SDL_SCANCODE_LEFT] == 1)
   {
     printf("consenbrink\n");
-    rectPlayer.x -= 10;
+    rectPlayer.x -= speed;
   }
   if(keys[SDL_SCANCODE_RIGHT] == 1)
   {
-    rectPlayer.x += 10;
+    rectPlayer.x += speed;
     printf("consenbrinkler\n");
   }
 }
@@ -296,12 +303,20 @@ void errorSolution()
   //-------------MENU STUFF---------------
   TTF_CloseFont(font0);
   TTF_CloseFont(font1);
+  TTF_CloseFont(fontHighScore);
+  TTF_CloseFont(fontScore);
   SDL_DestroyTexture(texturefont0);
   SDL_DestroyTexture(texturefont1);
   SDL_DestroyTexture(bgTexture);
 
-  //-------------STAGE 1 STUFF---------------
+  //-------------GENERAL STUFF---------------
+  SDL_DestroyTexture(player);
   SDL_DestroyTexture(bgStages);
+
+  //-------------STAGE 1 STUFF---------------
+  SDL_DestroyTexture(bgStageOne);
+  SDL_DestroyTexture(textureHighScore);
+  SDL_DestroyTexture(textureScore);
 
   win = NULL;
   rend = NULL;
@@ -309,8 +324,11 @@ void errorSolution()
   font1 = NULL;
   texturefont0 = NULL;
   texturefont1 = NULL;
+  textureHighScore = NULL;
+  textureScore = NULL;
   bgTexture = NULL;
   bgStages = NULL;
+  player = NULL;
 
   Mix_CloseAudio();
   Mix_Quit();
