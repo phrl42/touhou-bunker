@@ -86,7 +86,10 @@ int main()
 
   Mix_FreeChunk(select);
   Mix_FreeChunk(menuBGM);
-  stageOneInit();
+
+
+  stagesPrepare();
+  stageOnePrepare();
 
   while (stage1)
   {
@@ -94,7 +97,11 @@ int main()
     SDL_RenderClear(rend);
 
     // draw stuff
-    SDL_RenderCopy(rend, bgStageOne, NULL, NULL);
+    SDL_RenderCopy(rend, bgStages, NULL, NULL);
+    SDL_RenderCopy(rend, bgStageOne, NULL, &rectStageArea);
+    SDL_RenderCopy(rend, player, &rectStageArea, &rectPlayer);
+    SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);
+    SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
 
     // switch back buffer with front buffer
     SDL_RenderPresent(rend);
@@ -108,6 +115,7 @@ int main()
         break;
       }
     }
+    movementPlayer();
   }
 
   errorSolution();

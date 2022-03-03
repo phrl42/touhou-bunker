@@ -16,10 +16,22 @@ extern SDL_Texture *texturefont0;
 extern TTF_Font *font1;
 extern SDL_Texture *texturefont1;
 
+//--------------GENERAL STUFF--------------
+extern SDL_Texture *bgStages;
+extern SDL_Rect rectStageArea;
 
+extern TTF_Font *fontHighScore;
+extern TTF_Font *fontScore;
+extern SDL_Texture *textureHighScore;
+extern SDL_Texture *textureScore;
+
+extern SDL_Rect rectHighScore;
+extern SDL_Rect rectScore;
+
+extern SDL_Texture *player;
+extern SDL_Rect rectPlayer;
 //-------------STAGE 1 STUFF---------------
 extern SDL_Texture *bgStageOne;
-
 
 // so that main knows how to call the function
 void initWindow();
@@ -27,7 +39,9 @@ void initFont();
 void menuHover(int menu);
 bool menuExecute();
 bool bgLoad();
-void stageOneInit();
+void stagesPrepare();
+void stageOnePrepare();
+void movementPlayer();
 void errorSolution();
 
 #endif
