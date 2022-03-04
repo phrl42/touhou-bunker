@@ -28,8 +28,9 @@ extern SDL_Texture *textureScore;
 extern SDL_Rect rectHighScore;
 extern SDL_Rect rectScore;
 
-extern SDL_Texture *player[];
-extern SDL_Rect rectPlayer;
+extern SDL_Texture *player;
+extern SDL_Rect rectDestPlayer;
+extern SDL_Rect rectSrcPlayer;
 
 extern bool up, down, left, right, idle;
 //-------------STAGE 1 STUFF---------------

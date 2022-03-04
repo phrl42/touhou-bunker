@@ -38,13 +38,13 @@ SDL_Texture *textureScore;
 SDL_Rect rectHighScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35), FONT_MENU_WIDTH + 80, FONT_MENU_HEIGHT - 10};
 SDL_Rect rectScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35) + 100, FONT_MENU_WIDTH, FONT_MENU_HEIGHT - 10};
 
-SDL_Texture *player[24];
-SDL_Rect rectPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
+SDL_Texture *player;
+SDL_Rect rectDestPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
+SDL_Rect rectSrcPlayer ={0, 0, 31, 47};
 
 bool up = false, down = false, left = false, right = false, idle = true;
 
 SDL_Thread *threadAnimation;
-char file[18] = "src/img/reimuX.png";
 //-------------STAGE 1 STUFF---------------
 SDL_Texture *bgStageOne;
 
@@ -195,7 +195,7 @@ void menuHover(int menu)
 
 bool menuExecute()
 {
-  // this is being called when pressing  enter
+  // this is being called when pressing enter
   switch (menuLocation)
   {
   // START
@@ -226,16 +226,14 @@ void stagesPrepare()
 
   // load background
   SDL_Surface *surfaceStages = IMG_Load("src/img/bgFilled.png");
-
   bgStages = SDL_CreateTextureFromSurface(rend, surfaceStages);
-
-  // SDL_FreeSurface(surfaceStages); This is being used for other stages as well
+  SDL_FreeSurface(surfaceStages);
 
   //------------------Text Stuff---------------------------------
   fontHighScore = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 20);
   fontScore = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 20);
 
-  SDL_Surface *surfaceHighScore = TTF_RenderText_Solid(fontHighScore, "Top Score", colorOff);
+  SDL_Surface *surfaceHighScore = TTF_RenderText_Solid(fontHighScore, "Hi-Score", colorOff);
   SDL_Surface *surfaceScore = TTF_RenderText_Solid(fontHighScore, "Score", colorOff);
 
   textureHighScore = SDL_CreateTextureFromSurface(rend, surfaceHighScore);
@@ -247,29 +245,9 @@ void stagesPrepare()
   SDL_FreeSurface(surfaceHighScore);
   SDL_FreeSurface(surfaceScore);
 
-  //--------------Player-------------------
-  //  surfacePlayer[0 - 7] reimua-h IDLE
-  //  surfacePlayer[8 - 16] reimui-p LEFT
-  //  surfacePlayer[17 - 23] reimuq-x RIGHT
-  //  self-explanatory, I know
-
-  SDL_Surface *surfacePlayer[24];
-
-  for (int i = 0; i < 24; i++)
-  {
-    // replace character at line 13
-    file[13] = i + 'a'; // 97 == a in ASCII then increment --> 98 == b in ASCII
-
-    surfacePlayer[i] = IMG_Load(file);
-    player[i] = SDL_CreateTextureFromSurface(rend, surfacePlayer[i]);
-
-    SDL_FreeSurface(surfacePlayer[i]);
-
-    if (!player[i])
-    {
-      SDL_Log("loading player models failed: %s\n", SDL_GetError());
-    }
-  }
+  SDL_Surface *surfacePlayer = IMG_Load("src/img/reimu-spritesheet.png");
+  player = SDL_CreateTextureFromSurface(rend, surfacePlayer);
+  SDL_FreeSurface(surfacePlayer);
 }
 
 void callThread()
@@ -306,7 +284,7 @@ void movementPlayer()
   if (keys[SDL_SCANCODE_UP] == 1)
   {
     up = true;
-    rectPlayer.y -= speed;
+    rectDestPlayer.y -= speed;
   }
   else
   {
@@ -316,7 +294,7 @@ void movementPlayer()
   if (keys[SDL_SCANCODE_DOWN] == 1)
   {
     down = true;
-    rectPlayer.y += speed;
+    rectDestPlayer.y += speed;
   }
   else
   {
@@ -326,7 +304,7 @@ void movementPlayer()
   if (keys[SDL_SCANCODE_LEFT] == 1)
   {
     left = true;
-    rectPlayer.x -= speed;
+    rectDestPlayer.x -= speed;
   }
   else
   {
@@ -336,7 +314,7 @@ void movementPlayer()
   if (keys[SDL_SCANCODE_RIGHT] == 1)
   {
     right = true;
-    rectPlayer.x += speed;
+    rectDestPlayer.x += speed;
   }
   else
   {
@@ -355,39 +333,15 @@ void movementPlayer()
 
 void animate(int i)
 {
-  SDL_Delay(5);
-  SDL_RenderCopy(rend, player[i], NULL, &rectPlayer);
+  SDL_Delay(150);
+  SDL_RenderCopy(rend, player, NULL, &rectDestPlayer);
 }
 
 int animationPlayer(void *ptr)
 {
-  ptr = &w; // get some random address, so that the compiler shuts up
+  ptr = &w; // get some idiotic address so that the compiler shuts up
   SDL_Log("thread number: %p", ptr);
 
-  if (idle || down || up)
-  {
-    SDL_Log("1\n");
-    for (int i = 0; i <= 7; i++)
-    {
-      animate(i);
-    }
-  }
-  else if (left)
-  {
-    SDL_Log("2\n");
-    for (int i = 8; i <= 17; i++)
-    {
-      animate(i);
-    }
-  }
-  else if (right)
-  {
-    SDL_Log("3\n");
-    for (int i = 18; i <= 23; i++)
-    {
-      animate(i);
-    }
-  }
   return 1; // fuer die Katz!!
 }
 
@@ -406,11 +360,9 @@ void errorSolution()
   SDL_DestroyTexture(bgTexture);
 
   //-------------GENERAL STUFF---------------
-  for (int i = 0; i < 24; i++)
-  {
-    SDL_DestroyTexture(player[i]);
-    player[i] = NULL;
-  }
+
+  SDL_DestroyTexture(player);
+  player = NULL;
   SDL_DestroyTexture(bgStages);
   TTF_CloseFont(fontHighScore);
   TTF_CloseFont(fontScore);
