@@ -40,11 +40,16 @@ SDL_Rect rectScore = {(WINDOW_WIDTH / 2) + 150, (WINDOW_HEIGHT / 35) + 100, FONT
 
 SDL_Texture *player;
 SDL_Rect rectDestPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
-SDL_Rect rectSrcPlayer ={0, 0, 31, 47};
+SDL_Rect rectSrcPlayer = {0, 0, 32, 47};
 
 bool up = false, down = false, left = false, right = false, idle = true;
 
 SDL_Thread *threadAnimation;
+
+Uint32 ticks;
+Uint32 seconds;
+Uint32 spriteX;
+Uint32 spriteY;
 //-------------STAGE 1 STUFF---------------
 SDL_Texture *bgStageOne;
 
@@ -229,7 +234,7 @@ void stagesPrepare()
   bgStages = SDL_CreateTextureFromSurface(rend, surfaceStages);
   SDL_FreeSurface(surfaceStages);
 
-  //------------------Text Stuff---------------------------------
+  //------------------Text Stuff / GENERAL STUFF---------------------------------
   fontHighScore = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 20);
   fontScore = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 20);
 
@@ -331,23 +336,37 @@ void movementPlayer()
   }
 }
 
-void animate(int i)
-{
-  SDL_Delay(150);
-  SDL_RenderCopy(rend, player, NULL, &rectDestPlayer);
-}
-
 int animationPlayer(void *ptr)
 {
-  ptr = &w; // get some idiotic address so that the compiler shuts up
-  SDL_Log("thread number: %p", ptr);
+  ptr = &w; // get some idiotic address so that the compiler shuts up CON
+  SDL_Log("thread number: %p", ptr); // all I do is bait CON
+  ticks = SDL_GetTicks();
+  seconds = ticks / 100; // for example 5000 / 100 = 50 which we will utilise as our framerate 
+  spriteX = seconds % 8; // because we have 8 sprites per action (output will vary in the number of sprite we have, e.g: 0 1 2 3 . . .)
+  spriteY = seconds % 3; // because we have 3 rows (more information ^)
 
-  return 1; // fuer die Katz!!
+  if(idle || up || down)
+  {
+    rectSrcPlayer.y = 0;
+    rectSrcPlayer.x = spriteX * 32;
+  }
+  if(left)
+  {
+    rectSrcPlayer.y = 2 * 47;
+    rectSrcPlayer.x = spriteX * 32;
+  }
+  if(right)
+  {
+    rectSrcPlayer.y = 1 * 47;
+    rectSrcPlayer.x = spriteX * 32;
+  }
+
+  return 1; // fuer die Katz!! CON
 }
 
 void errorSolution()
 {
-  //SDL_WaitThread(threadAnimation, NULL);
+  SDL_WaitThread(threadAnimation, NULL);
   SDL_DestroyRenderer(rend);
   SDL_DestroyWindow(win);
 
@@ -360,16 +379,15 @@ void errorSolution()
   SDL_DestroyTexture(bgTexture);
 
   //-------------GENERAL STUFF---------------
-
   SDL_DestroyTexture(player);
-  player = NULL;
   SDL_DestroyTexture(bgStages);
   TTF_CloseFont(fontHighScore);
   TTF_CloseFont(fontScore);
-  //-------------STAGE 1 STUFF---------------
-  SDL_DestroyTexture(bgStageOne);
   SDL_DestroyTexture(textureHighScore);
   SDL_DestroyTexture(textureScore);
+  //-------------STAGE 1 STUFF---------------
+  SDL_DestroyTexture(bgStageOne);
+ 
 
   win = NULL;
   rend = NULL;
@@ -381,9 +399,11 @@ void errorSolution()
   textureScore = NULL;
   bgTexture = NULL;
   bgStages = NULL;
+  player = NULL;
 
   Mix_CloseAudio();
   Mix_Quit();
   TTF_Quit();
+  IMG_Quit();
   SDL_Quit();
 }

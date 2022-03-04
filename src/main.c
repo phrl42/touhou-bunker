@@ -6,7 +6,7 @@ int main()
 
   bool loopMenu = true;
   bool stage1 = false;
-  int menu;
+  int menu; // this is getting initialized later on
   initWindow();
 
   Mix_Chunk *select = Mix_LoadWAV("src/bgm/select.wav");
@@ -94,7 +94,7 @@ int main()
     SDL_RenderCopy(rend, player, &rectSrcPlayer, &rectDestPlayer);
     SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);
     SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
-    //callThread();
+    callThread();
 
     movementPlayer();
 
