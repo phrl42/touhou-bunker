@@ -28,20 +28,24 @@ extern SDL_Texture *textureScore;
 extern SDL_Rect rectHighScore;
 extern SDL_Rect rectScore;
 
-extern SDL_Texture *player;
+extern SDL_Texture *player[];
 extern SDL_Rect rectPlayer;
+
+extern bool up, down, left, right, idle;
 //-------------STAGE 1 STUFF---------------
 extern SDL_Texture *bgStageOne;
 
 // so that main knows how to call the function
 void initWindow();
-void initFont();
+void initMenu();
 void menuHover(int menu);
 bool menuExecute();
-bool bgLoad();
+void bgLoad();
 void stagesPrepare();
 void stageOnePrepare();
 void movementPlayer();
+void callThread();
+int animationPlayer(void *ptr);
 void errorSolution();
 
 #endif

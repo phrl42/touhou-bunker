@@ -6,20 +6,13 @@ int main()
 
   bool loopMenu = true;
   bool stage1 = false;
-
   int menu;
-
   initWindow();
 
   Mix_Chunk *select = Mix_LoadWAV("src/bgm/select.wav");
   Mix_Chunk *menuBGM = Mix_LoadWAV("src/bgm/menu.wav");
 
-  if (!bgLoad())
-  {
-    loopMenu = false;
-  }
-
-  initFont();
+  initMenu();
 
   Mix_PlayChannel(-1, menuBGM, -1);
 
@@ -98,10 +91,14 @@ int main()
     // draw stuff
     SDL_RenderCopy(rend, bgStages, NULL, NULL);
     SDL_RenderCopy(rend, bgStageOne, NULL, &rectStageArea);
-    SDL_RenderCopy(rend, player, NULL, &rectPlayer);
     SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);
     SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
 
+    callThread();
+
+    movementPlayer();
+
+    //SDL_LOG("Up: %d\nDown: %d\nLeft: %d\nRight: %d\nIDLE: %d\n", up, down, left, right, idle);
     // switch back buffer with front buffer
     SDL_RenderPresent(rend);
 
@@ -114,8 +111,7 @@ int main()
         break;
       }
     }
-    printf("player.x : %d\n player.y : %d\n", rectPlayer.x, rectPlayer.y);
-    movementPlayer();
+    //SDL_Log("player.x : %d\n player.y : %d\n", rectPlayer.x, rectPlayer.y);
   }
 
   errorSolution();
