@@ -94,6 +94,7 @@ int main()
     SDL_RenderCopy(rend, player, &rectSrcPlayer, &rectDestPlayer);
     SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);
     SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
+
     callThread();
 
     movementPlayer();
