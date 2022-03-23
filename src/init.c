@@ -43,6 +43,7 @@ SDL_Rect rectDestPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WIN
 SDL_Rect rectSrcPlayer = {0, 0, 32, 47};
 
 bool up = false, down = false, left = false, right = false, idle = true;
+bool animate = true;
 
 SDL_Thread *threadAnimation;
 
@@ -98,25 +99,13 @@ void initWindow()
   // to mix music (play sounds simultaneously)
   Mix_AllocateChannels(8);
 
-  SDL_SetHint(SDL_HINT_RENDER_DRIVER,"opengl");
+  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 }
 
 void initMenu()
 {
-  // loading image into memory
-  SDL_Surface *background = IMG_Load("src/img/menu.png");
-
-  if (!background)
-  {
-    SDL_Log("loading menu.png failed: %s\n", SDL_GetError());
-    exit(3);
-  }
-
   // load image data into graphics card hardware memory
-  bgTexture = SDL_CreateTextureFromSurface(rend, background);
-
-  // remove image data from memory
-  SDL_FreeSurface(background);
+  bgTexture = IMG_LoadTexture(rend, "src/img/menu.png");
 
   if (!bgTexture)
   {
@@ -230,9 +219,7 @@ void stagesPrepare()
   SDL_DestroyTexture(bgTexture);
 
   // load background
-  SDL_Surface *surfaceStages = IMG_Load("src/img/bgFilled.png");
-  bgStages = SDL_CreateTextureFromSurface(rend, surfaceStages);
-  SDL_FreeSurface(surfaceStages);
+  bgStages = IMG_LoadTexture(rend, "src/img/bgFilled.png");
 
   //------------------Text Stuff / GENERAL STUFF---------------------------------
   fontHighScore = TTF_OpenFont("src/ttf/mononoki-Regular.ttf", 20);
@@ -250,16 +237,21 @@ void stagesPrepare()
   SDL_FreeSurface(surfaceHighScore);
   SDL_FreeSurface(surfaceScore);
 
-  SDL_Surface *surfacePlayer = IMG_Load("src/img/reimu-spritesheet.png");
-  player = SDL_CreateTextureFromSurface(rend, surfacePlayer);
-  SDL_FreeSurface(surfacePlayer);
+  player = IMG_LoadTexture(rend, "src/img/reimu-spritesheet.png");
 }
 
 void callThread()
 {
-  threadAnimation = SDL_CreateThread(animationPlayer, "animation thread", (void*)NULL);
+  if(threadAnimation)
+  {
+    return;
+  }
+  else
+  {
+    threadAnimation = SDL_CreateThread(animationPlayer, "animation thread", (void *)NULL);
+  }
 
-  if(!threadAnimation)
+  if (!threadAnimation)
   {
     SDL_Log("creating thread failed: %s\n", SDL_GetError());
   }
@@ -267,9 +259,7 @@ void callThread()
 
 void stageOnePrepare()
 {
-  SDL_Surface *surfaceStageOne = IMG_Load("src/img/bgStageOne.png");
-  bgStageOne = SDL_CreateTextureFromSurface(rend, surfaceStageOne);
-  SDL_FreeSurface(surfaceStageOne);
+  bgStageOne = IMG_LoadTexture(rend, "src/img/bgStageOne.png");
 }
 
 void movementPlayer()
@@ -326,7 +316,7 @@ void movementPlayer()
     right = false;
   }
 
-  if((keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT]) != 1)
+  if ((keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT]) != 1)
   {
     idle = true;
   }
@@ -338,27 +328,32 @@ void movementPlayer()
 
 int animationPlayer(void *ptr)
 {
-  ptr = &w; // get some idiotic address so that the compiler shuts up CON
+  ptr = &w;                          // get some idiotic address so that the compiler shuts up CON
   SDL_Log("thread number: %p", ptr); // all I do is bait CON
-  ticks = SDL_GetTicks();
-  seconds = ticks / 100; // for example 5000 / 100 = 50 which we will utilise as our framerate 
-  spriteX = seconds % 8; // because we have 8 sprites per action (output will vary in the number of sprite we have, e.g: 0 1 2 3 . . .)
-  spriteY = seconds % 3; // because we have 3 rows (more information ^)
 
-  if(idle || up || down)
+  while (animate)
   {
-    rectSrcPlayer.y = 0;
-    rectSrcPlayer.x = spriteX * 32;
-  }
-  if(left)
-  {
-    rectSrcPlayer.y = 2 * 47;
-    rectSrcPlayer.x = spriteX * 32;
-  }
-  if(right)
-  {
-    rectSrcPlayer.y = 1 * 47;
-    rectSrcPlayer.x = spriteX * 32;
+    SDL_Delay(100);        // i dont want any cpu to explode because of this animation
+    ticks = SDL_GetTicks();
+    seconds = ticks / 100; // for example 5000 / 100 = 50 which we will utilise as our framerate
+    spriteX = seconds % 8; // because we have 8 sprites per action (output will vary in the number of sprite we have, e.g: 0 1 2 3 . . .)
+    spriteY = seconds % 3; // because we have 3 rows (more information ^)
+
+    if (idle || up || down)
+    {
+      rectSrcPlayer.y = 0;
+      rectSrcPlayer.x = spriteX * 32;
+    }
+    if (left)
+    {
+      rectSrcPlayer.y = 2 * 47;
+      rectSrcPlayer.x = spriteX * 32;
+    }
+    if (right)
+    {
+      rectSrcPlayer.y = 1 * 47;
+      rectSrcPlayer.x = spriteX * 32;
+    }
   }
 
   return 1; // fuer die Katz!! CON
@@ -387,7 +382,6 @@ void errorSolution()
   SDL_DestroyTexture(textureScore);
   //-------------STAGE 1 STUFF---------------
   SDL_DestroyTexture(bgStageOne);
- 
 
   win = NULL;
   rend = NULL;

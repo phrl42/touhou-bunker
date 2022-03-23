@@ -33,6 +33,7 @@ extern SDL_Rect rectDestPlayer;
 extern SDL_Rect rectSrcPlayer;
 
 extern bool up, down, left, right, idle;
+extern bool animate;
 //-------------STAGE 1 STUFF---------------
 extern SDL_Texture *bgStageOne;
 

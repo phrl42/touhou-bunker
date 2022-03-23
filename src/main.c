@@ -82,7 +82,6 @@ int main()
 
   stagesPrepare();
   stageOnePrepare();
-
   while (stage1)
   {
     // clear the window
@@ -96,7 +95,6 @@ int main()
     SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
 
     callThread();
-
     movementPlayer();
 
     //SDL_LOG("Up: %d\nDown: %d\nLeft: %d\nRight: %d\nIDLE: %d\n", up, down, left, right, idle);
@@ -108,6 +106,7 @@ int main()
       switch (ev.type)
       {
       case SDL_QUIT:
+        animate = false;
         stage1 = false;
         break;
       }
