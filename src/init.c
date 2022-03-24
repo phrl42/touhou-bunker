@@ -242,6 +242,10 @@ void stagesPrepare()
 
 void callThread()
 {
+  /* it works like this: this function is being called everytime a frame gets rendered and to not make the cpu explode, 
+  we will just check if the thread is true (is working) if it is not, it will start it, and if it did not start it, it will give out the error, 
+  if the thread is running (threadAnimation == true) do not do anything */
+
   if(threadAnimation)
   {
     return;
@@ -316,7 +320,7 @@ void movementPlayer()
     right = false;
   }
 
-  if ((keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT]) != 1)
+  if ((up || down || right || left) != true)
   {
     idle = true;
   }
