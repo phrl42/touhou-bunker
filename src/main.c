@@ -111,7 +111,7 @@ int main()
         break;
       }
     }
-    //SDL_Log("player.x : %d\n player.y : %d\n", rectDestPlayer.x, rectDestPlayer.y);
+    SDL_Log("player.x : %d\n player.y : %d\n", rectDestPlayer.x, rectDestPlayer.y);
   }
 
   errorSolution();

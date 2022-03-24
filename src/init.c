@@ -276,7 +276,7 @@ void movementPlayer()
     speed = 8;
   }
 
-  if (keys[SDL_SCANCODE_UP] == 1)
+  if (keys[SDL_SCANCODE_UP] == 1 && rectDestPlayer.y > rectStageArea.y + 5)
   {
     up = true;
     rectDestPlayer.y -= speed;
@@ -286,7 +286,7 @@ void movementPlayer()
     up = false;
   }
 
-  if (keys[SDL_SCANCODE_DOWN] == 1)
+  if (keys[SDL_SCANCODE_DOWN] == 1 && rectDestPlayer.y < (rectStageArea.y + rectStageArea.h) - rectDestPlayer.h - 5)
   {
     down = true;
     rectDestPlayer.y += speed;
@@ -296,7 +296,7 @@ void movementPlayer()
     down = false;
   }
 
-  if (keys[SDL_SCANCODE_LEFT] == 1)
+  if (keys[SDL_SCANCODE_LEFT] == 1 && rectDestPlayer.x > rectStageArea.x - 5)
   {
     left = true;
     rectDestPlayer.x -= speed;
@@ -306,7 +306,7 @@ void movementPlayer()
     left = false;
   }
 
-  if (keys[SDL_SCANCODE_RIGHT] == 1)
+  if (keys[SDL_SCANCODE_RIGHT] == 1 && rectDestPlayer.x < (rectStageArea.x + rectStageArea.w) - rectDestPlayer.w + 7)
   {
     right = true;
     rectDestPlayer.x += speed;
