@@ -1,14 +1,6 @@
 # touhou-bunker
 a fan made project in C
 
-# TODO
-
-- [X] borders
-- [X] hitbox
-- [ ] enemies
-- [ ] use opengl
-- [ ] menu font array
-
 # Installation
 
 <p>required libraries: SDL2, SDL2_image, SDL2_mixer, SDL2_ttf</p>
