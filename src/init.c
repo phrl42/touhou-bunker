@@ -42,6 +42,11 @@ SDL_Texture *player;
 SDL_Rect rectDestPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
 SDL_Rect rectSrcPlayer = {0, 0, 32, 47};
 
+SDL_Texture *bullet;
+SDL_Rect rectBullet = {0, 0, 0, 0};
+
+SDL_Thread *threadBullet;
+
 bool up = false, down = false, left = false, right = false, idle = true;
 bool animate = true;
 
@@ -238,6 +243,8 @@ void stagesPrepare()
   SDL_FreeSurface(surfaceScore);
 
   player = IMG_LoadTexture(rend, "src/img/reimu-spritesheet.png");
+
+  bullet = IMG_LoadTexture(rend, "src/img/bullet.png");
 }
 
 void callThread()
@@ -328,8 +335,53 @@ void movementPlayer()
   {
     idle = false;
   }
+
+  if(keys[SDL_SCANCODE_Z] || keys[SDL_SCANCODE_Y])
+  {
+    shootBullets();
+  }
 }
 
+void shootBullets()
+{
+  rectBullet.x = rectDestPlayer.x + 10;
+  rectBullet.y = rectDestPlayer.y + 10;
+  // make it visible
+  rectBullet.w = 40; 
+  rectBullet.h = 40;
+
+  // call animation thread
+  if(threadBullet)
+  {
+    return;
+  }
+  else
+  {
+    threadBullet = SDL_CreateThread(animationBullet, "bullet animation", (void *)NULL);
+  }
+  // refer to void callThread() for further explanation
+  if(!threadBullet)
+  {
+    SDL_Log("Creating bullet animation thread failed: %s", SDL_GetError());
+  }
+}
+
+int animationBullet(void *ptr)
+{
+  ptr = &w;
+  SDL_Log("thread number: %p", ptr);
+  while((rectBullet.y) + rectBullet.h > rectStageArea.y)
+  {
+    //SDL_Log("%d\n%d\n", rectBullet.x, rectBullet.y);
+    SDL_Delay(10);
+    rectBullet.y -= 50;
+  }
+  threadBullet = NULL;
+  //make it invisible
+  rectBullet.w = 0;
+  rectBullet.h = 0;
+  return 1;
+}
 int animationPlayer(void *ptr)
 {
   ptr = &w;                          // get some idiotic address so that the compiler shuts up CON
@@ -359,7 +411,7 @@ int animationPlayer(void *ptr)
       rectSrcPlayer.x = spriteX * 32;
     }
   }
-
+  threadAnimation = NULL; // mark it as finished
   return 1; // fuer die Katz!! CON
 }
 
@@ -384,6 +436,7 @@ void errorSolution()
   TTF_CloseFont(fontScore);
   SDL_DestroyTexture(textureHighScore);
   SDL_DestroyTexture(textureScore);
+  SDL_DestroyTexture(bullet);
   //-------------STAGE 1 STUFF---------------
   SDL_DestroyTexture(bgStageOne);
 
@@ -398,6 +451,7 @@ void errorSolution()
   bgTexture = NULL;
   bgStages = NULL;
   player = NULL;
+  bullet = NULL;
 
   Mix_CloseAudio();
   Mix_Quit();

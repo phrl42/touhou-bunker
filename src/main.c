@@ -90,6 +90,7 @@ int main()
     // draw stuff
     SDL_RenderCopy(rend, bgStages, NULL, NULL);
     SDL_RenderCopy(rend, bgStageOne, NULL, &rectStageArea);
+    SDL_RenderCopy(rend, bullet, NULL, &rectBullet);
     SDL_RenderCopy(rend, player, &rectSrcPlayer, &rectDestPlayer);
     SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);
     SDL_RenderCopy(rend, textureScore, NULL, &rectScore);
@@ -111,7 +112,7 @@ int main()
         break;
       }
     }
-    SDL_Log("player.x : %d\n player.y : %d\n", rectDestPlayer.x, rectDestPlayer.y);
+    //SDL_Log("player.x : %d\n player.y : %d\n", rectDestPlayer.x, rectDestPlayer.y);
   }
 
   errorSolution();

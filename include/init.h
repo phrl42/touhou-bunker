@@ -32,6 +32,9 @@ extern SDL_Texture *player;
 extern SDL_Rect rectDestPlayer;
 extern SDL_Rect rectSrcPlayer;
 
+extern SDL_Texture *bullet;
+extern SDL_Rect rectBullet;
+
 extern bool up, down, left, right, idle;
 extern bool animate;
 //-------------STAGE 1 STUFF---------------
@@ -44,9 +47,11 @@ void menuHover(int menu);
 bool menuExecute();
 void bgLoad();
 void stagesPrepare();
+void callThread();
 void stageOnePrepare();
 void movementPlayer();
-void callThread();
+void shootBullets();
+int animationBullet(void *ptr);
 int animationPlayer(void *ptr);
 void errorSolution();
 
