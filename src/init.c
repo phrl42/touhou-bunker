@@ -47,8 +47,12 @@ SDL_Rect rectBullet = {0, 0, 0, 0};
 
 SDL_Thread *threadBullet;
 
+SDL_Texture *textureHitBox;
+SDL_Rect rectHitBox = {0, 0, 0, 0}; 
+
 bool up = false, down = false, left = false, right = false, idle = true;
 bool animate = true;
+bool shifting = false;
 
 SDL_Thread *threadAnimation;
 
@@ -245,6 +249,8 @@ void stagesPrepare()
   player = IMG_LoadTexture(rend, "src/img/reimu-spritesheet.png");
 
   bullet = IMG_LoadTexture(rend, "src/img/bullet.png");
+
+  textureHitBox = IMG_LoadTexture(rend, "src/img/hitbox.png");
 }
 
 void callThread()
@@ -277,6 +283,19 @@ void movementPlayer()
 {
   // this fixed the ,,start-stop'' issue by getting a snapshot of the current keyboard ; refer to the SDL2 Documentation
   keys = SDL_GetKeyboardState(NULL);
+
+  if(keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT])
+  {
+    rectHitBox.x = rectDestPlayer.x + (rectDestPlayer.w / 2) - (rectHitBox.w / 2);
+    rectHitBox.y = rectDestPlayer.y + (rectDestPlayer.h / 2) - (rectHitBox.h / 1.5); //why the fuck does this work
+    rectHitBox.w = 15;
+    rectHitBox.h = 14;
+  }
+  else
+  {
+    rectHitBox.w = 0;
+    rectHitBox.h = 0;
+  }
 
   if (keys[SDL_SCANCODE_LSHIFT] == 1)
   {
@@ -437,6 +456,7 @@ void errorSolution()
   SDL_DestroyTexture(textureHighScore);
   SDL_DestroyTexture(textureScore);
   SDL_DestroyTexture(bullet);
+  SDL_DestroyTexture(textureHitBox);
   //-------------STAGE 1 STUFF---------------
   SDL_DestroyTexture(bgStageOne);
 
@@ -452,6 +472,7 @@ void errorSolution()
   bgStages = NULL;
   player = NULL;
   bullet = NULL;
+  textureHitBox = NULL;
 
   Mix_CloseAudio();
   Mix_Quit();

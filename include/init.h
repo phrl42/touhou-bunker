@@ -35,6 +35,9 @@ extern SDL_Rect rectSrcPlayer;
 extern SDL_Texture *bullet;
 extern SDL_Rect rectBullet;
 
+extern SDL_Texture *textureHitBox;
+extern SDL_Rect rectHitBox;
+
 extern bool up, down, left, right, idle;
 extern bool animate;
 //-------------STAGE 1 STUFF---------------
