@@ -3,8 +3,8 @@ a fan made project in C
 
 # TODO
 
-- [X] borders
-- [X] hitbox
+- [x] borders
+- [x] hitbox
 - [ ] enemies
 - [ ] use opengl
 - [ ] menu font array
