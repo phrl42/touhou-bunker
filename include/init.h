@@ -32,8 +32,8 @@ extern SDL_Texture *player;
 extern SDL_Rect rectDestPlayer;
 extern SDL_Rect rectSrcPlayer;
 
-extern SDL_Texture *bullet;
-extern SDL_Rect rectBullet;
+extern SDL_Texture *bullet[5];
+extern SDL_Rect rectBullet[5];
 
 extern SDL_Texture *textureHitBox;
 extern SDL_Rect rectHitBox;
@@ -55,6 +55,7 @@ void stageOnePrepare();
 void movementPlayer();
 void shootBullets();
 int animationBullet(void *ptr);
+void drawBullets();
 int animationPlayer(void *ptr);
 void errorSolution();
 

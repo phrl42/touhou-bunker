@@ -90,7 +90,7 @@ int main()
     // draw stuff
     SDL_RenderCopy(rend, bgStages, NULL, NULL);
     SDL_RenderCopy(rend, bgStageOne, NULL, &rectStageArea);
-    SDL_RenderCopy(rend, bullet, NULL, &rectBullet);
+    drawBullets();
     SDL_RenderCopy(rend, player, &rectSrcPlayer, &rectDestPlayer);
     SDL_RenderCopy(rend, textureHitBox, NULL, &rectHitBox);
     SDL_RenderCopy(rend, textureHighScore, NULL, &rectHighScore);

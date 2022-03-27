@@ -42,8 +42,9 @@ SDL_Texture *player;
 SDL_Rect rectDestPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
 SDL_Rect rectSrcPlayer = {0, 0, 32, 47};
 
-SDL_Texture *bullet;
-SDL_Rect rectBullet = {0, 0, 0, 0};
+int bulletsNumber = 5;
+SDL_Texture *bullet[5];
+SDL_Rect rectBullet[5];
 
 SDL_Thread *threadBullet;
 
@@ -52,7 +53,6 @@ SDL_Rect rectHitBox = {0, 0, 0, 0};
 
 bool up = false, down = false, left = false, right = false, idle = true;
 bool animate = true;
-bool shifting = false;
 
 SDL_Thread *threadAnimation;
 
@@ -248,7 +248,10 @@ void stagesPrepare()
 
   player = IMG_LoadTexture(rend, "src/img/reimu-spritesheet.png");
 
-  bullet = IMG_LoadTexture(rend, "src/img/bullet.png");
+  for(int i = 0; i < bulletsNumber; i++)
+  {
+    bullet[i] = IMG_LoadTexture(rend, "src/img/bullet.png");
+  }
 
   textureHitBox = IMG_LoadTexture(rend, "src/img/hitbox.png");
 }
@@ -284,10 +287,11 @@ void movementPlayer()
   // this fixed the ,,start-stop'' issue by getting a snapshot of the current keyboard ; refer to the SDL2 Documentation
   keys = SDL_GetKeyboardState(NULL);
 
+  rectHitBox.x = rectDestPlayer.x + (rectDestPlayer.w / 2) - (rectHitBox.w / 2);
+  rectHitBox.y = rectDestPlayer.y + (rectDestPlayer.h / 2) - (rectHitBox.h / 1.5); //why the fuck does this work
+
   if(keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT])
   {
-    rectHitBox.x = rectDestPlayer.x + (rectDestPlayer.w / 2) - (rectHitBox.w / 2);
-    rectHitBox.y = rectDestPlayer.y + (rectDestPlayer.h / 2) - (rectHitBox.h / 1.5); //why the fuck does this work
     rectHitBox.w = 15;
     rectHitBox.h = 14;
   }
@@ -297,7 +301,7 @@ void movementPlayer()
     rectHitBox.h = 0;
   }
 
-  if (keys[SDL_SCANCODE_LSHIFT] == 1)
+  if (keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT])
   {
     speed = 4;
   }
@@ -363,12 +367,6 @@ void movementPlayer()
 
 void shootBullets()
 {
-  rectBullet.x = rectDestPlayer.x + 10;
-  rectBullet.y = rectDestPlayer.y + 10;
-  // make it visible
-  rectBullet.w = 40; 
-  rectBullet.h = 40;
-
   // call animation thread
   if(threadBullet)
   {
@@ -376,12 +374,20 @@ void shootBullets()
   }
   else
   {
+    for(int i = 0; i < bulletsNumber; i++)
+    {
+      rectBullet[i].x = rectDestPlayer.x + 10;
+      rectBullet[i].y = rectDestPlayer.y + 10;
+      // make it visible
+      rectBullet[i].w = 40; 
+      rectBullet[i].h = 40;
+    }
     threadBullet = SDL_CreateThread(animationBullet, "bullet animation", (void *)NULL);
   }
   // refer to void callThread() for further explanation
   if(!threadBullet)
   {
-    SDL_Log("Creating bullet animation thread failed: %s", SDL_GetError());
+    SDL_Log("creating bullet animation thread failed: %s", SDL_GetError());
   }
 }
 
@@ -389,18 +395,35 @@ int animationBullet(void *ptr)
 {
   ptr = &w;
   SDL_Log("thread number: %p", ptr);
-  while((rectBullet.y) + rectBullet.h > rectStageArea.y)
+  while(rectBullet[bulletsNumber - 5].y > rectStageArea.y)
   {
     //SDL_Log("%d\n%d\n", rectBullet.x, rectBullet.y);
-    SDL_Delay(10);
-    rectBullet.y -= 50;
+    SDL_Delay(20);
+    rectBullet[0].y -= 50;
+    rectBullet[1].y -= 40;
+    rectBullet[2].y -= 30;
+    rectBullet[3].y -= 25;
+    rectBullet[4].y -= 20;
   }
   threadBullet = NULL;
   //make it invisible
-  rectBullet.w = 0;
-  rectBullet.h = 0;
+  for(int i = 0; i < bulletsNumber; i++)
+  {
+    rectBullet[i].w = 0;
+    rectBullet[i].h = 0;
+  }
+
   return 1;
 }
+
+void drawBullets()
+{
+  for(int i = 0; i < bulletsNumber; i++)
+  {
+    SDL_RenderCopy(rend, bullet[i], NULL, &rectBullet[i]);
+  }
+}
+
 int animationPlayer(void *ptr)
 {
   ptr = &w;                          // get some idiotic address so that the compiler shuts up CON
@@ -455,7 +478,6 @@ void errorSolution()
   TTF_CloseFont(fontScore);
   SDL_DestroyTexture(textureHighScore);
   SDL_DestroyTexture(textureScore);
-  SDL_DestroyTexture(bullet);
   SDL_DestroyTexture(textureHitBox);
   //-------------STAGE 1 STUFF---------------
   SDL_DestroyTexture(bgStageOne);
@@ -471,7 +493,11 @@ void errorSolution()
   bgTexture = NULL;
   bgStages = NULL;
   player = NULL;
-  bullet = NULL;
+  for(int i = 0; i < bulletsNumber; i++)
+  {
+    bullet[i] = NULL;
+    SDL_DestroyTexture(bullet[i]);
+  }
   textureHitBox = NULL;
 
   Mix_CloseAudio();
