@@ -32,8 +32,8 @@ extern SDL_Texture *player;
 extern SDL_Rect rectDestPlayer;
 extern SDL_Rect rectSrcPlayer;
 
-extern SDL_Texture *bullet[5];
-extern SDL_Rect rectBullet[5];
+extern SDL_Texture *bullet[7];
+extern SDL_Rect rectBullet[7];
 
 extern SDL_Texture *textureHitBox;
 extern SDL_Rect rectHitBox;

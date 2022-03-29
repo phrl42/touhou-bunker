@@ -42,14 +42,14 @@ SDL_Texture *player;
 SDL_Rect rectDestPlayer = {((WINDOW_WIDTH / 2) + 100) / 2, (WINDOW_HEIGHT - (WINDOW_HEIGHT / 20)) - 100, 70, 70};
 SDL_Rect rectSrcPlayer = {0, 0, 32, 47};
 
-int bulletsNumber = 5;
-SDL_Texture *bullet[5];
-SDL_Rect rectBullet[5];
+int bulletsNumber = 7;
+SDL_Texture *bullet[7];
+SDL_Rect rectBullet[7];
 
 SDL_Thread *threadBullet;
 
 SDL_Texture *textureHitBox;
-SDL_Rect rectHitBox = {0, 0, 0, 0}; 
+SDL_Rect rectHitBox = {0, 0, 0, 0};
 
 bool up = false, down = false, left = false, right = false, idle = true;
 bool animate = true;
@@ -248,7 +248,7 @@ void stagesPrepare()
 
   player = IMG_LoadTexture(rend, "src/img/reimu-spritesheet.png");
 
-  for(int i = 0; i < bulletsNumber; i++)
+  for (int i = 0; i < bulletsNumber; i++)
   {
     bullet[i] = IMG_LoadTexture(rend, "src/img/bullet.png");
   }
@@ -258,11 +258,11 @@ void stagesPrepare()
 
 void callThread()
 {
-  /* it works like this: this function is being called everytime a frame gets rendered and to not make the cpu explode, 
-  we will just check if the thread is true (is working) if it is not, it will start it, and if it did not start it, it will give out the error, 
+  /* it works like this: this function is being called everytime a frame gets rendered and to not make the cpu explode,
+  we will just check if the thread is true (is working) if it is not, it will start it, and if it did not start it, it will give out the error,
   if the thread is running (threadAnimation == true) do not do anything */
 
-  if(threadAnimation)
+  if (threadAnimation)
   {
     return;
   }
@@ -288,9 +288,9 @@ void movementPlayer()
   keys = SDL_GetKeyboardState(NULL);
 
   rectHitBox.x = rectDestPlayer.x + (rectDestPlayer.w / 2) - (rectHitBox.w / 2);
-  rectHitBox.y = rectDestPlayer.y + (rectDestPlayer.h / 2) - (rectHitBox.h / 1.5); //why the fuck does this work
+  rectHitBox.y = rectDestPlayer.y + (rectDestPlayer.h / 2) - (rectHitBox.h / 1.5); // why the fuck does this work
 
-  if(keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT])
+  if (keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT])
   {
     rectHitBox.w = 15;
     rectHitBox.h = 14;
@@ -359,7 +359,7 @@ void movementPlayer()
     idle = false;
   }
 
-  if(keys[SDL_SCANCODE_Z] || keys[SDL_SCANCODE_Y])
+  if (keys[SDL_SCANCODE_Z] || keys[SDL_SCANCODE_Y])
   {
     shootBullets();
   }
@@ -368,24 +368,24 @@ void movementPlayer()
 void shootBullets()
 {
   // call animation thread
-  if(threadBullet)
+  if (threadBullet)
   {
     return;
   }
   else
   {
-    for(int i = 0; i < bulletsNumber; i++)
+    for (int i = 0; i < bulletsNumber; i++)
     {
       rectBullet[i].x = rectDestPlayer.x + 10;
       rectBullet[i].y = rectDestPlayer.y + 10;
       // make it visible
-      rectBullet[i].w = 40; 
+      rectBullet[i].w = 40;
       rectBullet[i].h = 40;
     }
     threadBullet = SDL_CreateThread(animationBullet, "bullet animation", (void *)NULL);
   }
   // refer to void callThread() for further explanation
-  if(!threadBullet)
+  if (!threadBullet)
   {
     SDL_Log("creating bullet animation thread failed: %s", SDL_GetError());
   }
@@ -395,30 +395,33 @@ int animationBullet(void *ptr)
 {
   ptr = &w;
   SDL_Log("thread number: %p", ptr);
-  while(rectBullet[bulletsNumber - 5].y > rectStageArea.y)
+  while (rectBullet[0].y > rectStageArea.y)
   {
-    //SDL_Log("%d\n%d\n", rectBullet.x, rectBullet.y);
-    SDL_Delay(20);
+    // SDL_Log("%d\n%d\n", rectBullet.x, rectBullet.y);
+    // there has to be a better way
+    // okay this works for now
+    SDL_Delay(10);
     rectBullet[0].y -= 50;
-    rectBullet[1].y -= 40;
-    rectBullet[2].y -= 30;
-    rectBullet[3].y -= 25;
-    rectBullet[4].y -= 20;
+    rectBullet[1].y -= 45;
+    rectBullet[2].y -= 40;
+    rectBullet[3].y -= 35;
+    rectBullet[4].y -= 30;
+    rectBullet[5].y -= 25;
+    rectBullet[6].y -= 20;
   }
   threadBullet = NULL;
-  //make it invisible
-  for(int i = 0; i < bulletsNumber; i++)
+  // make it invisible
+  for (int i = 0; i < bulletsNumber; i++)
   {
     rectBullet[i].w = 0;
     rectBullet[i].h = 0;
   }
-
   return 1;
 }
 
 void drawBullets()
 {
-  for(int i = 0; i < bulletsNumber; i++)
+  for (int i = 0; i < bulletsNumber; i++)
   {
     SDL_RenderCopy(rend, bullet[i], NULL, &rectBullet[i]);
   }
@@ -431,7 +434,7 @@ int animationPlayer(void *ptr)
 
   while (animate)
   {
-    SDL_Delay(100);        // i dont want any cpu to explode because of this animation
+    SDL_Delay(100); // i dont want any cpu to explode because of this animation
     ticks = SDL_GetTicks();
     seconds = ticks / 100; // for example 5000 / 100 = 50 which we will utilise as our framerate
     spriteX = seconds % 8; // because we have 8 sprites per action (output will vary in the number of sprite we have, e.g: 0 1 2 3 . . .)
@@ -454,7 +457,7 @@ int animationPlayer(void *ptr)
     }
   }
   threadAnimation = NULL; // mark it as finished
-  return 1; // fuer die Katz!! CON
+  return 1;               // fuer die Katz!! CON
 }
 
 void errorSolution()
@@ -493,7 +496,7 @@ void errorSolution()
   bgTexture = NULL;
   bgStages = NULL;
   player = NULL;
-  for(int i = 0; i < bulletsNumber; i++)
+  for (int i = 0; i < bulletsNumber; i++)
   {
     bullet[i] = NULL;
     SDL_DestroyTexture(bullet[i]);
