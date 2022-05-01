@@ -393,8 +393,12 @@ void shootBullets()
 
 int animationBullet(void *ptr)
 {
-  ptr = &w;
-  SDL_Log("thread number: %p", ptr);
+  ptr = NULL;
+  if(w + w == 88) //troll
+  {
+    SDL_Log("thread number: %p", ptr);
+  }
+
   while (rectBullet[0].y > rectStageArea.y)
   {
     // SDL_Log("%d\n%d\n", rectBullet.x, rectBullet.y);
@@ -429,8 +433,11 @@ void drawBullets()
 
 int animationPlayer(void *ptr)
 {
-  ptr = &w;                          // get some idiotic address so that the compiler shuts up CON
-  SDL_Log("thread number: %p", ptr); // all I do is bait CON
+  ptr = NULL;
+  if(w + w == 88)
+  {
+    SDL_Log("thread number: %p\n", ptr);
+  }
 
   while (animate)
   {
